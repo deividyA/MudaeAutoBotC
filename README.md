@@ -1,4 +1,5 @@
-Please Gif Star ?? Stars make me happy.  I'm open to design automation for other games (doesn't have to be a discord game) just let me know
+Implemented a temporary quick fix, code requires alot of clean up. Might have to be rewritten using `discord.py-self` due to `Discord-S.C.U.M` being unmaintained.
+https://github.com/dolfies/discord.py-self
 # Regards to Report of Bot not Working 
 I have ran several test of bot for long amounts of time and it has ran several rolls and claims without stopping if you are submitting a issue of bot not working plesae explain and show some amount of basic troubleshooting. everytime i have to launch a test of the bot staying it requires a minimum of like 8 hours just to confirm if it works as intended or not. Future issues posted without basic troubleshooting will be closed as this is getting out of hand. 
 
@@ -55,9 +56,11 @@ You'll be able to leave the window running in the background, and not need to th
 
 # Configuration
 To configure the bot, you'll edit the variables in the **Settings_Mudae.json** file for your botting needs.
+Change the guild and channel ids in **guild.txt** as well as username and user id in the **user.txt** under the user folder.
 
 ## Bot settings
 All settings are set within the Settings_Mudae.json File
+Some settings may be superseded by your Mudae server settings.
 
 + `token` - The user token for the account you want to bot on. If you need extra assistance on how to obtain it, let me know.
 + `channelids` - Which channels to **roll** and **monitor**  e.g. 807##########948
