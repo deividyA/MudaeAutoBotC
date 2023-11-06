@@ -32,7 +32,7 @@ jsonf = open("Settings_Mudae.json")
 settings = json.load(jsonf)
 jsonf.close()
 
-bot = discum.Client(token=settings["token"],log={"console":False, "file":False})
+bot = discum.Client(token=settings["token"],log={"console":True, "file":False})
 mudae = 432610292342587392
 
 with open("cmds.txt","r") as f:
@@ -139,7 +139,7 @@ def mudae_warning(tide,StartwithUser=True):
             r = r.parsed.auto()
             # must be from relevant channel id, and start with username
             if StartwithUser == True:
-                return r['author']['id'] == str(mudae) and r['channel_id'] == tide and r['content'].startswith(f"**{bot.gateway.session.user['username']}")
+                return r['author']['id'] == str(mudae) and r['channel_id'] == tide and r['content'].startswith(f"**{user['username']}")
             elif StartwithUser == False:
                 return r['author']['id'] == str(mudae) and r['channel_id'] == tide
         return False
@@ -176,7 +176,7 @@ def get_server_settings(guild_id,channel_id):
     
     # no setting found
     # so send settings request, and hope they have default prefix.
-    FsMsgs = bot.searchMessages(guild_id,channelID=[channel_id],authorID=[bot.gateway.session.user['id']],textSearch=roll_prefix,includeNsfw=True,limit=2)
+    FsMsgs = bot.searchMessages(guild_id,channelID=[channel_id],authorID=[user['id']],textSearch=roll_prefix,includeNsfw=True,limit=2)
     FsResults = bot.filterSearchResults(FsMsgs)
     for group in FsResults:
         if group['content'].endswith(roll_prefix):
@@ -372,7 +372,7 @@ def waifu_roll(tide,slashed,slashguild):
             varwait = wait_for(bot,mudae_warning(tides,False),timeout=5)
             time.sleep(.5)
             
-            if varwait != None and varwait['content'].startswith(f"**{bot.gateway.session.user['username']}") and "$ku" not in varwait['content']:
+            if varwait != None and varwait['content'].startswith(f"**{user['username']}") and "$ku" not in varwait['content']:
                 # We over-rolled.
                 waifuwait = True
                 if c_settings['rolls'] > 2 and not warned_overroll:
@@ -392,7 +392,7 @@ def waifu_roll(tide,slashed,slashguild):
                 p = c_settings['pending']
                 if our_roll == None and p:
                     # on_message may have not seen our roll, so we should manually check if it was our roll
-                    our_roll = p == bot.gateway.session.user['id']
+                    our_roll = p == user['id']
                     
                     
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
@@ -449,10 +449,10 @@ def is_rolled_char(m):
 @bot.gateway.command
 def on_message(resp):
     global user
+
     recv = time.time()
     if resp.event.message:
         m = resp.parsed.auto()
-        #print(m)
         aId = m['author']['id']
         content = m['content']
         embeds = m['embeds']
@@ -461,26 +461,30 @@ def on_message(resp):
         
         guildid = m['guild_id'] if 'guild_id' in m else None
         butts = Buttoner(m["components"])
-        
-        #print(dir(butts))
+
+        # print(dir(butts))
         
         # if "@" in content:
             # print("There was a possible wish detected")
-        
-        # if butts.components != [] :
-            # buttMoji = butts.components[0]["components"][0]["emoji"]["name"]
-            # bot.click(
-            # aId,
-            # channelID=m["channel_id"],
-            # guildID=m.get("guild_id"),
-            # messageID=m["id"],
-            # messageFlags=m["flags"],
-            # data=butts.getButton(emojiName=buttMoji),
-            # )
             
         if int(channelid) not in mhids:
             # Not a channel we work in.
             return
+        
+        snipe_delay = channel_settings[int(channelid)]['kak_snipe'][1]
+        
+        if butts.components != [] :
+            buttMoji = butts.components[0]["components"][0]["emoji"]["name"]
+            if buttMoji.lower() in KakeraVari:
+                time.sleep(snipe_delay+1)
+                bot.click(
+                aId,
+                channelID=m["channel_id"],
+                guildID=m.get("guild_id"),
+                messageID=m["id"],
+                messageFlags=m["flags"],
+                data=butts.getButton(emojiName=buttMoji),
+                )
         
         if int(channelid) not in channel_settings:
             mhids.remove(int(channelid))
@@ -509,7 +513,7 @@ def on_message(resp):
                         waifu_wall[channelid] = next_claim(channelid)[0]
                 return
           
-            
+
             msg_buf[messageid] = {'claimed':int(embeds[0].get('color',0)) not in (16751916,1360437),'rolled':roller == user['id']}
             print(f"Our user rolled in {channelid}" if roller == user['id'] else f"Someone else rolled in {channelid}")
             if msg_buf[messageid]['claimed']:
@@ -632,18 +636,18 @@ def on_message(resp):
                 
                 if str(user['id']) not in content and charname.lower() not in chars and get_serial(chardes) not in series_list and int(get_kak(chardes)) < kak_min:
                     logger.debug(f"Ignoring {charname} from {get_serial(chardes)} with {get_kak(chardes)} Kakera Value in Server id:{guildid}")
+
             if butts.components != []:
                 buttsonly = butts.components[0]["components"][0]["emoji"]["name"]
-                #print(buttsonly.lower())
-                if buttsonly in KakeraVari:
+                if buttsonly.lower() in KakeraVari:
                     bot.click(
                     aId,
                     channelID=channelid,
                     guildID=m.get("guild_id"),
                     messageID=messageid,
                     messageFlags=m["flags"],
-                    data=butts.getButton(emojiName=buttonly),
-                    )  
+                    data=butts.getButton(emojiName=buttsonly),
+                    )
                 
     if resp.event.message_updated:
         # Handle claims
@@ -661,7 +665,7 @@ def on_message(resp):
                     return
                 embed = embeds[0]
                 f = embed.get('footer')
-                if f and bot.gateway.session.user['username'] in f['text']:
+                if f and user['username'] in f['text']:
                     # Successful claim, mark waifu claim window as used
                     waifu_wall[rchannelid] = next_claim(rchannelid)[0]
                 elif int(embed['color']) == 6753288:
@@ -731,7 +735,7 @@ def on_message(resp):
             # if emojiid != None and emoji.lower() in soulLink:
                 # react_m = bot.getMessage(rchannelid, rmessageid).json()[0]['embeds'][0]
                 # fake = react_m.get('footer')
-                # if fake and bot.gateway.session.user['username'] in fake['text'] and "<:chaoskey:690110264166842421>" in react_m['description']:
+                # if fake and user['username'] in fake['text'] and "<:chaoskey:690110264166842421>" in react_m['description']:
                     # sendEmoji = emoji + ":" +emojiid
                     # cooldown = kakera_wall.get(rguildid,0) - time.time()
                     # if cooldown <= 1:
@@ -784,11 +788,12 @@ def on_message(resp):
         ready = bot.gateway.READY
         try:
             user = bot.gateway.session.user
+            print(f"Logged in")
         except KeyError:
             try:
                 with open(pathjoin('user','user.txt'),'r') as userssettings:
                     print(f"Reading from UserFile")
-                    user = userssettings.read()
+                    user = json.loads(userssettings.read())
             except IOError:
                 print(f"File Not Found using Different Method")
         bot.gateway.request.searchSlashCommands(str(ghids[0]), limit=100, command_ids=[])
@@ -800,7 +805,7 @@ def on_message(resp):
             try:
                 with open(pathjoin('user','guild.txt'),'r') as guildersettings:
                     print("reading from Guild file")
-                    guilds = guildersettings.read()
+                    guilds = json.loads(guildersettings.read())
             except IOError:
                 print("Please get a dump of all your guilds and put it in the userfolder")
                 
