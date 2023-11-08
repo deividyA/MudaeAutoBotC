@@ -3,6 +3,7 @@ import discum
 import re
 import asyncio
 import json
+import random
 import time
 import logging
 import threading
@@ -300,7 +301,7 @@ def next_reset(channel):
     channel = int(channel)
     offset = channel_settings[channel]['reset_min']*60
     t = time.time()
-    return t+(3600-((t-offset)%3600))
+    return t+(3600-((t-offset)%3600))+ random.randint(0,59)*60
 
 def poke_roll(tide):
     logger.debug(f"Pokemon Rolling Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
