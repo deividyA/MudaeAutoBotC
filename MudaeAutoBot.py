@@ -301,7 +301,7 @@ def next_reset(channel):
     channel = int(channel)
     offset = channel_settings[channel]['reset_min']*60
     t = time.time()
-    return t+(3600-((t-offset)%3600))+ random.randint(0,59)*60
+    return t+(3600-((t-offset)%3600))
 
 def poke_roll(tide):
     logger.debug(f"Pokemon Rolling Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
@@ -355,6 +355,7 @@ def waifu_roll(tide,slashed,slashguild):
     roll_cmd = c_settings['prefix'] + roll_prefix
     
     warned_overroll = False
+    offset_random = random.randint(0,59)*60
     while True:
         wait_for_quiet = wait_for(bot,mudae_warning(tides,False),timeout=10)
         if wait_for_quiet != None:
@@ -405,7 +406,10 @@ def waifu_roll(tide,slashed,slashguild):
             
         print(f"{waifuwait}: Waifu rolling : {tide}")
         time.sleep((next_reset(tide)-time.time())+1)
+        offset_random = random.randint(0,57)*60 
+        time.sleep(offset_random)
         waifuwait = False
+        
 
 def snipe(recv_time,snipe_delay):
     if snipe_delay != 0.0:
