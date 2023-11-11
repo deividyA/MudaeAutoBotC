@@ -355,7 +355,6 @@ def waifu_roll(tide,slashed,slashguild):
     roll_cmd = c_settings['prefix'] + roll_prefix
     
     warned_overroll = False
-    offset_random = random.randint(0,59)*60
     while True:
         wait_for_quiet = wait_for(bot,mudae_warning(tides,False),timeout=10)
         if wait_for_quiet != None:
@@ -406,7 +405,7 @@ def waifu_roll(tide,slashed,slashguild):
             
         print(f"{waifuwait}: Waifu rolling : {tide}")
         time.sleep((next_reset(tide)-time.time())+1)
-        offset_random = random.randint(0,57)*60 
+        offset_random = random.randint(0,57)*60
         time.sleep(offset_random)
         waifuwait = False
         
