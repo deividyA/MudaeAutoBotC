@@ -399,7 +399,7 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
                     rolls_left = 2
-            if varwait = None or rolls_left == 0:
+            if varwait == None or rolls_left == 0:
                 # Ran out of rolls
                 waifuwait = True
             
