@@ -405,7 +405,7 @@ def waifu_roll(tide,slashed,slashguild):
             
         print(f"{waifuwait}: Waifu rolling : {tide}")
         time.sleep((next_reset(tide)-time.time())+1)
-        offset_random = random.randint(0,57)*60
+        offset_random = random.randint(0,58)*60
         time.sleep(offset_random)
         waifuwait = False
         
