@@ -821,12 +821,13 @@ def on_message(resp):
                 c_settings = parse_settings_message(msg)
                 channel_settings[int(matched_channel)] = c_settings
         
-        if settings['pkmrolling'].lower().strip() == "true":
-            p = threading.Thread(target=poke_roll,args=[mhids[0]])
-            p.start()
+        if settings['dailyrolling'].lower().strip() == "true":
             time.sleep(3)
             d = threading.Thread(target=daily_roll,args=[mhids[0]])
             d.start()
+        if settings['pokerolling'].lower().strip() == "true":
+            p = threading.Thread(target=poke_roll,args=[mhids[0]])
+            p.start()
         if settings['rolling'].lower().strip() == "true":
             for chid in mhids:
                 waifus = threading.Timer(10.0,waifu_roll,args=[chid,None,None])
