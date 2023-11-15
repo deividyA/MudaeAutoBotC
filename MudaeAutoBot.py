@@ -826,6 +826,7 @@ def on_message(resp):
             d = threading.Thread(target=daily_roll,args=[mhids[0]])
             d.start()
         if settings['pokerolling'].lower().strip() == "true":
+            time.sleep(3)
             p = threading.Thread(target=poke_roll,args=[mhids[0]])
             p.start()
         if settings['rolling'].lower().strip() == "true":
