@@ -15,7 +15,8 @@
    "roll_this":"wg",
    "rolling":"True",
    "slash_rolling":"True",
-   "pkmrolling":"True",
+   "dailyrolling":"True",
+   "pokerolling":"True",
    "series_list":[
       "Honkai Impact 3rd"
    ],
