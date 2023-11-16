@@ -493,18 +493,18 @@ def on_message(resp):
             else :
                 logger.info(f"Skipped {buttMoji} in Server: {guildid}")
                 
-                warn_check = mudae_warning(channelid)
-                kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
+            warn_check = mudae_warning(channelid)
+            kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
 
-                if kakerawallwait != None:
-                    time_to_wait = waitk_finder.findall(kakerawallwait['content'])
-                else:
-                    time_to_wait = []
-                
-                if len(time_to_wait):
-                    timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                    print(f"{timegetter} for kakera_wall was set for Server : {guildid}")
-                    kakera_wall[guildid] = timegetter + time.time()
+            if kakerawallwait != None:
+                time_to_wait = waitk_finder.findall(kakerawallwait['content'])
+            else:
+                time_to_wait = []
+            
+            if len(time_to_wait):
+                timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
+                print(f"{timegetter} for kakera_wall was set for Server : {guildid}")
+                kakera_wall[guildid] = timegetter + time.time()
         
         if int(channelid) not in channel_settings:
             mhids.remove(int(channelid))
