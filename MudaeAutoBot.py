@@ -33,7 +33,7 @@ jsonf = open("Settings_Mudae.json")
 settings = json.load(jsonf)
 jsonf.close()
 
-bot = discum.Client(token=settings["token"],log={"console":True, "file":False})
+bot = discum.Client(token=settings["token"],log={"console":False, "file":False})
 mudae = 432610292342587392
 
 with open("cmds.txt","r") as f:
