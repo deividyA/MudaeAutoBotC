@@ -146,6 +146,16 @@ def mudae_warning(tide,StartwithUser=True):
         return False
     return c
 
+def msg_checking(msgcontent):
+    msgtocheck = ["maintenance"] #list to check incase bot is down
+    t = False
+    if msgcontent.startswith(f"**{user['username']}"):
+        t = True
+    for i in msgtocheck:
+        if i in msgcontent:
+            t = True
+    return t
+    
 def get_server_settings(guild_id,channel_id):
     try:
         #with open(f"channeldata\\{channel_id}.txt","r") as textsettings:
@@ -362,7 +372,7 @@ def waifu_roll(tide,slashed,slashguild):
             continue
     
         c_settings['rolls'] = 0
-        rolls_left = -1
+        rolls_left = 50
         while waifuwait == False:
             if slashed != None:
                 bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=slashed)
@@ -371,9 +381,8 @@ def waifu_roll(tide,slashed,slashguild):
             rolls_left = rolls_left-1
             
             varwait = wait_for(bot,mudae_warning(tides,False),timeout=5)
-            time.sleep(.5)
-            
-            if varwait != None and varwait['content'].startswith(f"**{user['username']}") and "$ku" not in varwait['content']:
+            time.sleep(0.5)
+            if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
                 # We over-rolled.
                 waifuwait = True
                 if c_settings['rolls'] > 2 and not warned_overroll:
@@ -399,7 +408,7 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
                     rolls_left = 2
-            if varwait == None or rolls_left == 0:
+            if rolls_left == 0:
                 # Ran out of rolls
                 waifuwait = True
             
