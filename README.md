@@ -59,7 +59,7 @@ To configure the bot, you'll edit the variables in the **Settings_Mudae.json** f
 Change the guild and channel ids in **guild.txt** as well as username and user id in the **user.txt** under the user folder.
 
 ## Bot settings
-All settings are set within the Settings_Mudae.json File
+All settings are set within the Settings_Mudae.json file.
 Some settings may be superseded by your Mudae server settings.
 
 + `token` - The user token for the account you want to bot on. If you need extra assistance on how to obtain it, let me know.
