@@ -483,6 +483,12 @@ def on_message(resp):
         if int(channelid) not in mhids:
             # Not a channel we work in.
             return
+
+        if int(channelid) not in channel_settings:
+            mhids.remove(int(channelid))
+            logger.error(f"Could not find settings for {channelid}, please trigger the '$settings' command in the server and run the bot again.")
+            return
+        c_settings = channel_settings[int(channelid)]
         
         snipe_delay = channel_settings[int(channelid)]['kak_snipe'][1]
         
@@ -514,12 +520,6 @@ def on_message(resp):
                 timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
                 print(f"{timegetter} for kakera_wall was set for Server : {guildid}")
                 kakera_wall[guildid] = timegetter + time.time()
-        
-        if int(channelid) not in channel_settings:
-            mhids.remove(int(channelid))
-            logger.error(f"Could not find settings for {channelid}, please trigger the '$settings' command in the server and run the bot again.")
-            return
-        c_settings = channel_settings[int(channelid)]
 
         if c_settings['pending'] == None and int(aId) != mudae and content[0:c_settings['prefix_len']] == c_settings['prefix'] and content.split(' ')[0][c_settings['prefix_len']:] in mudae_cmds:
             # Note rolls as they happen so we know who rolled what
