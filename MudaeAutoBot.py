@@ -865,3 +865,7 @@ def empty(*args,**kwargs):
 #bot.sendMessage = empty
 
 bot.gateway.run(auto_reconnect=True)
+list = SlashCommander(bot.getSlashCommands(str(mudae)).json())
+print(list)
+data = list.get(['saved', 'queues', 'create'], inputs={'name':'wa'})
+bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=data)
