@@ -799,17 +799,15 @@ def on_message(resp):
         slashCmds = resp.parsed.auto()['application_commands']
         s = SlashCommander(slashCmds, application_id=str(mudae))
         for sli in range(len(s.commands.get("options"))):
+            print(s.commands.get("options")[sli].get("name") == roll_prefix)    
             if s.commands.get("options")[sli].get("name") == roll_prefix:
                 slashget = s.commands.get("options")[sli]
-        #slashget = s.get(["wa"])
-        #print(slashget)
-        
-        if settings['slash_rolling'].lower().strip() == "true":
-            for xchg in range(len(shids)):
-                slashchannel = shids[xchg]
-                slashguild = ghids[xchg]
-                slashfus = threading.Timer(10.0,waifu_roll,args=[slashchannel,slashget,slashguild])
-                slashfus.start()
+                if settings['slash_rolling'].lower().strip() == "true" and slashget != None:
+                    for xchg in range(len(shids)):
+                        slashchannel = shids[xchg]
+                        slashguild = ghids[xchg]
+                        slashfus = threading.Timer(10.0,waifu_roll,args=[slashchannel,slashget,slashguild])
+                        slashfus.start()
             
     global ready
  
@@ -825,7 +823,7 @@ def on_message(resp):
                     user = json.loads(userssettings.read())
             except IOError:
                 print(f"File Not Found using Different Method")
-        bot.gateway.request.searchSlashCommands(str(ghids[0]), limit=100, command_ids=[])
+        bot.gateway.request.searchSlashCommands(str(ghids[0]), limit=100, query=roll_prefix)
         
         try:
             guilds = bot.gateway.session.settings_ready['guilds']
@@ -854,10 +852,11 @@ def on_message(resp):
             time.sleep(3)
             p = threading.Thread(target=poke_roll,args=[mhids[0]])
             p.start()
-        if settings['rolling'].lower().strip() == "true":
+        if settings['rolling'].lower().strip() == "true" and settings['slash_rolling'].lower().strip() == "false":
             for chid in mhids:
                 waifus = threading.Timer(10.0,waifu_roll,args=[chid,None,None])
                 waifus.start()
+                
 
 def empty(*args,**kwargs):
     return
@@ -865,7 +864,3 @@ def empty(*args,**kwargs):
 #bot.sendMessage = empty
 
 bot.gateway.run(auto_reconnect=True)
-list = SlashCommander(bot.getSlashCommands(str(mudae)).json())
-print(list)
-data = list.get(['saved', 'queues', 'create'], inputs={'name':'wa'})
-bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=data)
