@@ -80,7 +80,8 @@ Some settings may be superseded by your Mudae server settings.
 + `Last_True` -  (True|False) enable Last Minute Claim windows
 + `last_claim_min` - (1-180) the window the window is open for e.g. 10 means last 10 minutes
 + `min_kak_last_min` - same as min kak but only within the last minute claim window
-
+# Note
+`Rolling` and `slash Rolling` only one can be true or both false
 # Optimize the snipes
 Typing $settings in your server with mudae should give you the snipe and kaksnipping timers.
 Using these values you usually snipes faster than a "Human" user can react 
