@@ -82,6 +82,8 @@ Some settings may be superseded by your Mudae server settings.
 + `min_kak_last_min` - same as min kak but only within the last minute claim window
 # Note
 `Rolling` and `slash Rolling` only one can be true or both false
++ if `slash Rolling` is enabled, `roll_this` will be like how you do slash commands (wa|wx|wg|hg|ha|mg|ma|mx)
++ if `Rolling` is enabled then it would be the usual one listed above
 # Optimize the snipes
 Typing $settings in your server with mudae should give you the snipe and kaksnipping timers.
 Using these values you usually snipes faster than a "Human" user can react 
