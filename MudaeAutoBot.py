@@ -798,8 +798,7 @@ def on_message(resp):
     if resp.event.guild_application_commands_updated:
         slashCmds = resp.parsed.auto()['application_commands']
         s = SlashCommander(slashCmds, application_id=str(mudae))
-        for sli in range(len(s.commands.get("options"))):
-            print(s.commands.get("options")[sli].get("name") == roll_prefix)    
+        for sli in range(len(s.commands.get("options"))):    
             if s.commands.get("options")[sli].get("name") == roll_prefix:
                 slashget = s.commands.get("options")[sli]
                 if settings['slash_rolling'].lower().strip() == "true" and slashget != None:
