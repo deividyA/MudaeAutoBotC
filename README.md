@@ -64,12 +64,13 @@ Some settings may be superseded by your Mudae server settings.
 
 + `token` - The user token for the account you want to bot on. If you need extra assistance on how to obtain it, let me know.
 + `channelids` - Which channels to **roll** and **monitor**  e.g. 807##########948
-+ `slash_ids` - Which channels to **Slash roll** e.g. 807##########948 (Please Match Slash_id with slash_guild_id)
-+ `slash_guild_ids` - Which Guild to **Slash roll** e.g. 807##########948 (Please Match Guild id with Slash_id)
++ `slash_ids` - Which channels to **Slash roll** e.g. 807##########948
++ `slash_guild_ids` - Which Guild to **Slash roll** e.g. 807##########948
 + `claim_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to Claim Characters e.g. 5
 + `kak_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to snipe Kakeraloot e.g. 8
 + `use_emoji` - This setting only works if you change the Mudaebot.py code by uncommenting out the line (Custom emojis only) e.g.  "<:emoji_name:795############214>"
-+ `roll_this` - ($m|$ma|$mg|$w|$wg|$wa|$h|$ha|$hg) If `Rolling` is enabled it will roll this specific command e.g. '$wg'
++ `roll_this` - (m|ma|mg|w|wg|wa|h|ha|hg) If `Rolling` is enabled it will roll this specific command e.g. '$wg'
++ `slash_this` - (wa|wx|wg|hg|ha|mg|ma|mx) If `slash Rolling` is enabled it will roll this specific command e.g. '/wg'
 + `Rolling` - (True|False) **Case-sensitive**, uses `channelid`
 + `slash Rolling` - (True|False) **Case-sensitive**, uses `Slash_ids`
 + `PkmRolling` - (True|False) Pokeslot rolling enabled, uses `channelid`
@@ -80,10 +81,7 @@ Some settings may be superseded by your Mudae server settings.
 + `Last_True` -  (True|False) enable Last Minute Claim windows
 + `last_claim_min` - (1-180) the window the window is open for e.g. 10 means last 10 minutes
 + `min_kak_last_min` - same as min kak but only within the last minute claim window
-# Note
-`Rolling` and `slash Rolling` only one can be true or both false
-+ if `slash Rolling` is enabled, `roll_this` will be like how you do slash commands (wa|wx|wg|hg|ha|mg|ma|mx)
-+ if `Rolling` is enabled then it would be the usual one listed above
+
 # Optimize the snipes
 Typing $settings in your server with mudae should give you the snipe and kaksnipping timers.
 Using these values you usually snipes faster than a "Human" user can react 
