@@ -47,6 +47,7 @@ series_list = settings["series_list"]
 chars = [charsv.lower() for charsv in settings["namelist"]]
 kak_min = settings["min_kak"]
 roll_prefix = settings["roll_this"]
+slash_prefix = settings["slash_this"]
 sniping = settings.get("sniping_enabled",True)
 
 ready = bot.gateway.READY
@@ -798,8 +799,8 @@ def on_message(resp):
     if resp.event.guild_application_commands_updated:
         slashCmds = resp.parsed.auto()['application_commands']
         s = SlashCommander(slashCmds, application_id=str(mudae))
-        for sli in range(len(s.commands.get("options"))):    
-            if s.commands.get("options")[sli].get("name") == roll_prefix:
+        for sli in range(len(s.commands.get("options"))):
+            if s.commands.get("options")[sli].get("name") == slash_prefix:
                 slashget = s.commands.get("options")[sli]
                 if settings['slash_rolling'].lower().strip() == "true" and slashget != None:
                     for xchg in range(len(shids)):
@@ -822,7 +823,7 @@ def on_message(resp):
                     user = json.loads(userssettings.read())
             except IOError:
                 print(f"File Not Found using Different Method")
-        bot.gateway.request.searchSlashCommands(str(ghids[0]), limit=100, query=roll_prefix)
+        bot.gateway.request.searchSlashCommands(str(ghids[0]), limit=100, query=slash_prefix)
         
         try:
             guilds = bot.gateway.session.settings_ready['guilds']
@@ -851,7 +852,7 @@ def on_message(resp):
             time.sleep(3)
             p = threading.Thread(target=poke_roll,args=[mhids[0]])
             p.start()
-        if settings['rolling'].lower().strip() == "true" and settings['slash_rolling'].lower().strip() == "false":
+        if settings['rolling'].lower().strip() == "true":
             for chid in mhids:
                 waifus = threading.Timer(10.0,waifu_roll,args=[chid,None,None])
                 waifus.start()
