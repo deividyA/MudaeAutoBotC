@@ -29,7 +29,7 @@ class CacheDict(OrderedDict):
 
 msg_buf = CacheDict(max=50)
 
-jsonf = open("Settings_Mudae.json")
+jsonf = open("Settings_Mudae.json", encoding="utf-8")
 settings = json.load(jsonf)
 jsonf.close()
 
@@ -372,7 +372,7 @@ def waifu_roll(tide,slashed,slashguild):
             continue
     
         c_settings['rolls'] = 0
-        rolls_left = -1
+        rolls_left = 50
         while waifuwait == False:
             if slashed != None:
                 bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=slashed)
@@ -380,7 +380,8 @@ def waifu_roll(tide,slashed,slashguild):
                 bot.sendMessage(tides,roll_cmd)
             rolls_left = rolls_left-1
             varwait = wait_for(bot,mudae_warning(tides,False),timeout=5)
-            time.sleep(1)
+            time.sleep(.5)
+            
             if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
                 # We over-rolled.
                 waifuwait = True
@@ -406,7 +407,7 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
                     rolls_left = 2
-            if rolls_left == 0 or varwait == None:
+            if rolls_left == 0:
                 # Ran out of rolls
                 waifuwait = True
             
@@ -472,8 +473,6 @@ def on_message(resp):
         
         guildid = m['guild_id'] if 'guild_id' in m else None
         butts = Buttoner(m["components"])
-
-        # print(dir(butts))
         
         # if "@" in content:
             # print("There was a possible wish detected")
@@ -494,7 +493,7 @@ def on_message(resp):
             buttMoji = butts.components[0]["components"][0]["emoji"]["name"]
             cooldown = kakera_wall.get(guildid,0) - time.time()
             if buttMoji.lower() in KakeraVari and cooldown <= 1:
-                time.sleep(snipe_delay+1)
+                time.sleep(snipe_delay)
                 bot.click(
                 aId,
                 channelID=m["channel_id"],
@@ -538,6 +537,7 @@ def on_message(resp):
                     # get claim time
                     if get_pwait(m['content']):
                         waifu_wall[channelid] = next_claim(channelid)[0]
+                        print(f"{next_claim(channelid)[0]} second(s) waifu claiming cooldown was set for channel : {channelid}")
                 return
           
 
@@ -752,7 +752,7 @@ def on_message(resp):
                 
                 if len(time_to_wait):
                     timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                    print(f"{timegetter} for kakera_wall was set for Server : {rguildid}")
+                    print(f"{timegetter} second(s) kakera reaction cooldown was set for channel : {rguildid}")
                     kakera_wall[rguildid] = timegetter + time.time()
                     
             # if emojiid != None and emoji.lower() in soulLink:
