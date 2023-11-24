@@ -63,9 +63,9 @@ All settings are set within the Settings_Mudae.json file.
 Some settings may be superseded by your Mudae server settings.
 
 + `token` - The user token for the account you want to bot on. If you need extra assistance on how to obtain it, let me know.
-+ `channelids` - Which channels to **roll** and **monitor**  e.g. 807##########948
-+ `slash_ids` - Which channels to **Slash roll** e.g. 807##########948
-+ `slash_guild_ids` - Which Guild to **Slash roll** e.g. 807##########948
++ `channelids` - Which channels to **roll** and **monitor**  e.g. 807##########948 (Channel ID)
++ `slash_ids` - Which channels to **Slash roll** e.g. 807##########948 (Channel ID)
++ `slash_guild_ids` - Which Guild to **Slash roll** e.g. 807##########948 (Server ID)
 + `claim_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to Claim Characters e.g. 5
 + `kak_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to snipe Kakeraloot e.g. 8
 + `use_emoji` - This setting only works if you change the Mudaebot.py code by uncommenting out the line (Custom emojis only) e.g.  "<:emoji_name:795############214>"
