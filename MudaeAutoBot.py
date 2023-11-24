@@ -299,7 +299,7 @@ def get_snipe_time(channel,rolled,message):
 
 def next_claim(channel):
     channel = int(channel)
-    offset = (channel_settings[channel]['shift']+channel_settings[channel]['reset_min'])*60
+    offset = (channel_settings[channel]['shift']+channel_settings[channel]['reset_min'] + 4)*60
     reset_period = channel_settings[channel]['claim_reset']*60
     t = time.time()+offset
     last_reset = (t%86400)%reset_period
@@ -379,7 +379,6 @@ def waifu_roll(tide,slashed,slashguild):
             else:
                 bot.sendMessage(tides,roll_cmd)
             rolls_left = rolls_left-1
-            
             varwait = wait_for(bot,mudae_warning(tides,False),timeout=5)
             time.sleep(0.5)
             if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
@@ -630,7 +629,7 @@ def on_message(resp):
                         else:
                             bot.addReaction(channelid, messageid, "❤")
                             break
-                print(f"{(next_claim(channelid)[1] - time.time())/60:.0f} minutes left until next claim window")            
+                # print(f"{(next_claim(channelid)[1] - time.time())/60:.0f} minutes left until next claim window")            
                 if "<:kakera:469835869059153940>" in chardes or "Claims:" in chardes or "Likes:" in chardes:
                     #det_time = time.time()
                     kak_value = get_kak(chardes)
@@ -646,10 +645,10 @@ def on_message(resp):
                 if is_last_enable and next_claim(channelid)[1] - time.time() < (60 * last_claim_window):
                     if "<:kakera:469835869059153940>" in chardes or "Claims:" in chardes or "Likes:" in chardes:
                         #det_time = time.time()
-                        print(f"Last Minute Claim was attempted")
                         kak_value = get_kak(chardes)
                         if int(kak_value) >= min_kak_last and charcolor == 16751916:
                             print(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
+                            print(f"Attempting Last Minute Claim")
                             snipe(recv,snipe_delay)
                             if msg_buf[messageid]['claimed']:
                                 return
