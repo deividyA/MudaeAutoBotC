@@ -149,6 +149,7 @@ def mudae_warning(tide,StartwithUser=True):
 
 def msg_checking(msgcontent):
     msgtocheck = ["maintenance"] #list to check incase bot is down
+    msgcontent = str(msgcontent)
     t = False
     if msgcontent.startswith(f"**{user['username']}"):
         t = True
@@ -298,13 +299,11 @@ def get_snipe_time(channel,rolled,message):
 
 def next_claim(channel):
     channel = int(channel)
-    offset = (120-(channel_settings[channel]['shift']+channel_settings[channel]['reset_min']))*60
-    
+    offset = (channel_settings[channel]['shift']+channel_settings[channel]['reset_min'])*60
     reset_period = channel_settings[channel]['claim_reset']*60
     t = time.time()+offset
     last_reset = (t%86400)%reset_period
     reset_at = reset_period-last_reset+time.time()
-
     return (int(t/reset_period),reset_at) # claim window id, timestamp of reset
 
 def next_reset(channel):
@@ -373,7 +372,7 @@ def waifu_roll(tide,slashed,slashguild):
             continue
     
         c_settings['rolls'] = 0
-        rolls_left = 50
+        rolls_left = -1
         while waifuwait == False:
             if slashed != None:
                 bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=slashed)
@@ -404,7 +403,6 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll == None and p:
                     # on_message may have not seen our roll, so we should manually check if it was our roll
                     our_roll = p == user['id']
-                    
                     
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
@@ -507,7 +505,7 @@ def on_message(resp):
                 data=butts.getButton(emojiName=buttMoji),
                 )
             else :
-                logger.info(f"Skipped {buttMoji} in Server: {guildid}")
+                print(f"Skipped {buttMoji} in Server: {guildid}")
                 
             warn_check = mudae_warning(channelid)
             kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
@@ -564,7 +562,7 @@ def on_message(resp):
                 charcolor = int(charpop['color'])
 
                 if str(user['id']) in content:
-                    logger.info(f"Wished {charname} from {get_serial(chardes)} with {get_kak(chardes)} Value in Server id:{guildid}")
+                    print(f"Wished {charname} from {get_serial(chardes)} with {get_kak(chardes)} Value in Server id:{guildid}")
                     snipe(recv,snipe_delay)
                     if msg_buf[messageid]['claimed']:
                         return
@@ -592,7 +590,7 @@ def on_message(resp):
                 
                 if charname.lower() in chars:
                     
-                    logger.info(f"{charname} appeared attempting to Snipe Server id:{guildid}")
+                    print(f"{charname} appeared attempting to Snipe Server id:{guildid}")
                     snipe(recv,snipe_delay)
                     if msg_buf[messageid]['claimed']:
                         return
@@ -603,7 +601,7 @@ def on_message(resp):
                     if ser in chardes and charcolor == 16751916:
                         
                         
-                        logger.info(f"{charname} from {ser} appeared attempting to snipe in {guildid}")
+                        print(f"{charname} from {ser} appeared attempting to snipe in {guildid}")
                         snipe(recv,snipe_delay)
                         if msg_buf[messageid]['claimed']:
                             return
@@ -632,30 +630,26 @@ def on_message(resp):
                         else:
                             bot.addReaction(channelid, messageid, "❤")
                             break
-
+                print(f"{(next_claim(channelid)[1] - time.time())/60:.0f} minutes left until next claim window")            
                 if "<:kakera:469835869059153940>" in chardes or "Claims:" in chardes or "Likes:" in chardes:
                     #det_time = time.time()
                     kak_value = get_kak(chardes)
                     if int(kak_value) >= kak_min and charcolor == 16751916:
-                        
-                        
-                        logger.info(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
+                        print(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
                         snipe(recv,snipe_delay)
                         if msg_buf[messageid]['claimed']:
                             return
                         m_reacts = bot.getMessage(channelid, messageid).json()[0]
                         snipe_intent(m,m_reacts,butts)
                         #print(f"took this much {time.time() - det_time}")
-                
+       
                 if is_last_enable and next_claim(channelid)[1] - time.time() < (60 * last_claim_window):
                     if "<:kakera:469835869059153940>" in chardes or "Claims:" in chardes or "Likes:" in chardes:
                         #det_time = time.time()
                         print(f"Last Minute Claim was attempted")
                         kak_value = get_kak(chardes)
                         if int(kak_value) >= min_kak_last and charcolor == 16751916:
-                            
-                            
-                            logger.info(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
+                            print(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
                             snipe(recv,snipe_delay)
                             if msg_buf[messageid]['claimed']:
                                 return
@@ -667,17 +661,17 @@ def on_message(resp):
                 if str(user['id']) not in content and charname.lower() not in chars and get_serial(chardes) not in series_list and int(get_kak(chardes)) < kak_min:
                     logger.debug(f"Ignoring {charname} from {get_serial(chardes)} with {get_kak(chardes)} Kakera Value in Server id:{guildid}")
 
-            if butts.components != []:
-                buttsonly = butts.components[0]["components"][0]["emoji"]["name"]
-                if buttsonly.lower() in KakeraVari:
-                    bot.click(
-                    aId,
-                    channelID=channelid,
-                    guildID=m.get("guild_id"),
-                    messageID=messageid,
-                    messageFlags=m["flags"],
-                    data=butts.getButton(emojiName=buttsonly),
-                    )
+            # if butts.components != []:
+            #     buttsonly = butts.components[0]["components"][0]["emoji"]["name"]
+            #     if buttsonly.lower() in KakeraVari:
+            #         bot.click(
+            #         aId,
+            #         channelID=channelid,
+            #         guildID=m.get("guild_id"),
+            #         messageID=messageid,
+            #         messageFlags=m["flags"],
+            #         data=butts.getButton(emojiName=buttsonly),
+            #         )
                 
     if resp.event.message_updated:
         # Handle claims
@@ -724,7 +718,7 @@ def on_message(resp):
             return
         
         if reactionid == int(user['id']) and int(rchannelid) in mhids:
-            logger.info(f"Sniping time waited Reaction was added")
+            print(f"Sniping time waited Reaction was added")
 
         snipe_delay = channel_settings[int(rchannelid)]['kak_snipe'][1]
         
@@ -742,11 +736,11 @@ def on_message(resp):
                 
                 cooldown = kakera_wall.get(rguildid,0) - time.time()
                 if cooldown <= 1:
-                    logger.info(f"{emoji} was detected on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
+                    print(f"{emoji} was detected on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
                     time.sleep(snipe_delay)
                     bot.addReaction(rchannelid,rmessageid,sendEmoji)
                 else:
-                    logger.info(f"Skipped {emoji} found on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
+                    print(f"Skipped {emoji} found on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
                     return 
 
                 warn_check = mudae_warning(rchannelid)
@@ -769,11 +763,11 @@ def on_message(resp):
                     # sendEmoji = emoji + ":" +emojiid
                     # cooldown = kakera_wall.get(rguildid,0) - time.time()
                     # if cooldown <= 1:
-                        # logger.info(f"{emoji} was detected on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
+                        # print(f"{emoji} was detected on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
                         # time.sleep(snipe_delay)
                         # bot.addReaction(rchannelid,rmessageid,sendEmoji)
                     # else:
-                        # logger.info(f"Skipped {emoji} found on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
+                        # print(f"Skipped {emoji} found on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
                         # return 
 
                     # warn_check = mudae_warning(rchannelid)
