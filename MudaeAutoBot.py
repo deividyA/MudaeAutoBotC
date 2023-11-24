@@ -380,7 +380,7 @@ def waifu_roll(tide,slashed,slashguild):
                 bot.sendMessage(tides,roll_cmd)
             rolls_left = rolls_left-1
             varwait = wait_for(bot,mudae_warning(tides,False),timeout=5)
-            time.sleep(0.5)
+            time.sleep(1)
             if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
                 # We over-rolled.
                 waifuwait = True
@@ -406,7 +406,7 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
                     rolls_left = 2
-            if rolls_left == 0:
+            if rolls_left == 0 or varwait == None:
                 # Ran out of rolls
                 waifuwait = True
             
