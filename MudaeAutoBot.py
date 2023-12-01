@@ -488,35 +488,6 @@ def on_message(resp):
         c_settings = channel_settings[int(channelid)]
         
         snipe_delay = channel_settings[int(channelid)]['kak_snipe'][1]
-        
-        if butts.components != [] :
-            buttMoji = butts.components[0]["components"][0]["emoji"]["name"]
-            cooldown = kakera_wall.get(guildid,0) - time.time()
-            if buttMoji.lower() in KakeraVari and cooldown <= 1:
-                time.sleep(snipe_delay)
-                bot.click(
-                aId,
-                channelID=m["channel_id"],
-                guildID=m.get("guild_id"),
-                messageID=m["id"],
-                messageFlags=m["flags"],
-                data=butts.getButton(emojiName=buttMoji),
-                )
-            else :
-                print(f"Skipped {buttMoji} in Server: {guildid}")
-                
-            warn_check = mudae_warning(channelid)
-            kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
-
-            if kakerawallwait != None:
-                time_to_wait = waitk_finder.findall(kakerawallwait['content'])
-            else:
-                time_to_wait = []
-            
-            if len(time_to_wait):
-                timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                print(f"{timegetter} for kakera_wall was set for Server : {guildid}")
-                kakera_wall[guildid] = timegetter + time.time()
 
         if c_settings['pending'] == None and int(aId) != mudae and content[0:c_settings['prefix_len']] == c_settings['prefix'] and content.split(' ')[0][c_settings['prefix_len']:] in mudae_cmds:
             # Note rolls as they happen so we know who rolled what
@@ -537,13 +508,41 @@ def on_message(resp):
                     # get claim time
                     if get_pwait(m['content']):
                         waifu_wall[channelid] = next_claim(channelid)[0]
-                        print(f"{next_claim(channelid)[0]} second(s) waifu claiming cooldown was set for channel : {channelid}")
+                        print(f"{next_claim(channelid)[1] - time.time()} second(s) waifu claiming cooldown was set for channel : {channelid}")
                 return
-          
 
             msg_buf[messageid] = {'claimed':int(embeds[0].get('color',0)) not in (16751916,1360437),'rolled':roller == user['id']}
             print(f"Our user rolled in {channelid}" if roller == user['id'] else f"Someone else rolled in {channelid}")
             if msg_buf[messageid]['claimed']:
+                if butts.components != [] :
+                    buttMoji = butts.components[0]["components"][0]["emoji"]["name"]
+                    cooldown = kakera_wall.get(guildid,0) - time.time()
+                    if (buttMoji.lower() in KakeraVari and cooldown <= 1) or buttMoji.lower() == "kakerap":
+                        if roller != user['id']:
+                            time.sleep(snipe_delay)
+                        bot.click(
+                        aId,
+                        channelID=m["channel_id"],
+                        guildID=m.get("guild_id"),
+                        messageID=m["id"],
+                        messageFlags=m["flags"],
+                        data=butts.getButton(emojiName=buttMoji),
+                        )
+                    else :
+                        print(f"Skipped {buttMoji} in Server: {guildid}")
+                        
+                    warn_check = mudae_warning(channelid)
+                    kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
+
+                    if kakerawallwait != None:
+                        time_to_wait = waitk_finder.findall(kakerawallwait['content'])
+                    else:
+                        time_to_wait = []
+                    
+                    if len(time_to_wait):
+                        timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
+                        print(f"{timegetter} for kakera_wall was set for Server : {guildid}")
+                        kakera_wall[guildid] = timegetter + time.time()
                 return
             if(not sniping and roller != user['id']):
                 # Sniping disabled by user
