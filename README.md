@@ -1,9 +1,6 @@
-Implemented a temporary quick fix, code requires alot of clean up. Might have to be rewritten using `discord.py-self` due to `Discord-S.C.U.M` being unmaintained.
+Might have to be rewritten using `discord.py-self` due to `Discord-S.C.U.M` being unmaintained in the future.
 https://github.com/dolfies/discord.py-self
-# Regards to Report of Bot not Working 
-I have ran several test of bot for long amounts of time and it has ran several rolls and claims without stopping if you are submitting a issue of bot not working plesae explain and show some amount of basic troubleshooting. everytime i have to launch a test of the bot staying it requires a minimum of like 8 hours just to confirm if it works as intended or not. Future issues posted without basic troubleshooting will be closed as this is getting out of hand. 
 
-I will be add a test folder within the repo so that I can provide you guys with images that show that it is working on my end
 # Regading Forking
 I have seen many users fork this repo. I do not mind forks but I really would like to state that github is a public space and that any user who forks this repo is ultimatly can be found by all the various users that frequent this repo. 
 
@@ -44,7 +41,7 @@ MudaeAutoBot is a python bot that auto rolls and attempts to snipe Kakeras and C
 + Mudae emoji reaction event sniping support
 
 ## How it works
-All this bot needs to work is your Discord _usertoken_ and the channel IDs that you want it to post in
+All this bot needs to work is your Discord _usertoken_ , the channel IDs and server IDs that you want it to post in
 
 This is intended to be completely automated; it doesn't need to take any input other than initial settings configuration.
 You'll be able to leave the window running in the background, and not need to think about it.
@@ -93,13 +90,11 @@ a minimum of 1 second to let mudae register that a character was rolled as is re
 This is a Discord **selfbot**. I am not responsible if you get banned using this program. 
 
 # Closing Notes
-I understand that this readme is not as detailed as many would like and I'm sure there are many more questions that one may have.
-
-Currently I'm still supporting this repo so feel free to **Contact Me** if you are having any Issues (Setup , Bugs , Feature suggestions)
-
-As for updates those will be added up until I no longer feel like this project is fun.
+This is forked from https://github.com/vivinano/MudaeAutoBot and I will try to see if we can support this repo.
 
 Thanks to:
+https://github.com/vivinano for this MudaeAutoBot 
+and
 https://github.com/FatPain
-for Assisting with Discum it was definitly not something I'm use to
+for assisting vivinano with Discum
 
