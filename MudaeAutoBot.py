@@ -372,7 +372,8 @@ def waifu_roll(tide,slashed,slashguild):
             continue
     
         c_settings['rolls'] = 0
-        rolls_left = 50
+        rolls_left = -1
+        checkmudaedown = 0
         while waifuwait == False:
             if slashed != None:
                 bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=slashed)
@@ -384,6 +385,7 @@ def waifu_roll(tide,slashed,slashguild):
             
             if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
                 # We over-rolled.
+                checkmudaedown = 0
                 waifuwait = True
                 if c_settings['rolls'] > 2 and not warned_overroll:
                     # We overrolled when we shouldn't have. Warn the user they can prevent this
@@ -392,6 +394,7 @@ def waifu_roll(tide,slashed,slashguild):
                 break
             elif varwait != None and rolls_left < 0:
                 # Check if our roll featured a warning
+                checkmudaedown = 0
                 total_text = varwait.get('content','') # $rollsleft 2
                 if len(varwait['embeds']):
                     total_text += varwait['embeds'][0].get('footer',{}).get('text','') # $rollsleft 0 (default)
@@ -407,10 +410,12 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
                     rolls_left = 2
-            if rolls_left == 0:
+            if rolls_left == 0 or checkmudaedown > 2:
                 # Ran out of rolls
                 waifuwait = True
-            
+            if varwait == None:
+                checkmudaedown += 1
+
         print(f"{waifuwait}: Waifu rolling : {tide}")
         time.sleep((next_reset(tide)-time.time())+1)
         offset_random = random.randint(0,58)*60
