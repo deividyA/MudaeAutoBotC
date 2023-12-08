@@ -1,7 +1,7 @@
-Might have to be rewritten using `discord.py-self` due to `Discord-S.C.U.M` being unmaintained in the future.
+This script might have to be rewritten using `discord.py-self` due to `Discord-S.C.U.M` being unmaintained.
 https://github.com/dolfies/discord.py-self
 
-# Regading Forking
+# Regarding Forking
 I have seen many users fork this repo. I do not mind forks but I really would like to state that github is a public space and that any user who forks this repo is ultimatly can be found by all the various users that frequent this repo. 
 
 !!!!!!! IF YOU FORK THIS REPO PLEASE DO NOT PUSH A COMMIT WITH YOUR DISCORD USER TOKEN !!!!!!
@@ -41,7 +41,7 @@ MudaeAutoBot is a python bot that auto rolls and attempts to snipe Kakeras and C
 + Mudae emoji reaction event sniping support
 
 ## How it works
-All this bot needs to work is your Discord _usertoken_ , the channel IDs and server IDs that you want it to post in
+All this bot needs to work is your Discord token, username, user ID, the channel IDs and server IDs that you want it to roll in.
 
 This is intended to be completely automated; it doesn't need to take any input other than initial settings configuration.
 You'll be able to leave the window running in the background, and not need to think about it.
@@ -52,38 +52,39 @@ You'll be able to leave the window running in the background, and not need to th
 + discum 1.3+
 
 # Configuration
-To configure the bot, you'll edit the variables in the **Settings_Mudae.json** file for your botting needs.
-Change the guild and channel ids in **guild.txt** as well as username and user id in the **user.txt** under the user folder.
+To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.
+Change the guild and channel ids in `guild.txt` as well as username and user id in the `user.txt` under the user folder.
 
 ## Bot settings
 All settings are set within the Settings_Mudae.json file.
 Some settings may be superseded by your Mudae server settings.
 
 + `token` - The user token for the account you want to bot on. If you need extra assistance on how to obtain it, let me know.
-+ `channelids` - Which channels to **roll** and **monitor**  e.g. 807##########948 (Channel ID)
++ `channelids` - Which channels to **Roll** and **monitor**  e.g. 807##########948 (Channel ID)
 + `slash_ids` - Which channels to **Slash roll** e.g. 807##########948 (Channel ID)
 + `slash_guild_ids` - Which Guild to **Slash roll** e.g. 807##########948 (Server ID)
 + `claim_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to Claim Characters e.g. 5
 + `kak_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to snipe Kakeraloot e.g. 8
 + `use_emoji` - This setting only works if you change the Mudaebot.py code by uncommenting out the line (Custom emojis only) e.g.  "<:emoji_name:795############214>"
-+ `roll_this` - (m|ma|mg|w|wg|wa|h|ha|hg) If `Rolling` is enabled it will roll this specific command e.g. '$wg'
-+ `slash_this` - (wa|wx|wg|hg|ha|mg|ma|mx) If `slash Rolling` is enabled it will roll this specific command e.g. '/wg'
-+ `Rolling` - (True|False) **Case-sensitive**, uses `channelid`
-+ `slash Rolling` - (True|False) **Case-sensitive**, uses `Slash_ids`
-+ `PkmRolling` - (True|False) Pokeslot rolling enabled, uses `channelid`
++ `roll_this` - (m|ma|mg|w|wg|wa|h|ha|hg) If `rolling` is enabled it will roll this specific command e.g. '$wg'
++ `slash_this` - (wa|wx|wg|hg|ha|mg|ma|mx) If `slash_rolling` is enabled it will roll this specific command e.g. '/wg'
++ `rolling` - (True|False) **Case-sensitive**, uses `channelid`
++ `slash_rolling` - (True|False) **Case-sensitive**, uses `Slash_ids`
++ `daily_claiming` - (True|False) **Case-sensitive**, Trigger $daily command everyday
++ `poke_rolling` - (True|False) **Case-sensitive**, Pokeslot rolling enabled, uses `channelid`
 + `series_list` - **Case-sensitive** Name of series of characters you want to claim  e.g. \[ "Honkai Impact 3rd" , "Senran Kagura" \]
 + `name_list` - **Must be exact match** List of specific character names to claim  e.g. \["Raiden Mei", "gOkU" \]
 + `emoji_list` - This is the kakera that will be snipes \[ "KakeraY" , "KakeraO" \] << This example means only snipe Yellow and orange Kakera
 + `min_kak` - A minimum kakera value to snipe a claimable character _regardless of whether it's in the series/name lists_
-+ `Last_True` -  (True|False) enable Last Minute Claim windows
-+ `last_claim_min` - (1-180) the window the window is open for e.g. 10 means last 10 minutes
++ `Last_True` -  (True|False) Enable last minute claim window
++ `last_claim_min` - (1-180) the time the window is open for e.g. 10 means last 10 minutes
 + `min_kak_last_min` - same as min kak but only within the last minute claim window
 
 # Optimize the snipes
 Typing $settings in your server with mudae should give you the snipe and kaksnipping timers.
 Using these values you usually snipes faster than a "Human" user can react 
 
-Please when settings Delays avoid setting 0 as your delay as it might be to fast for mudae
+Please when settings delays avoid setting 0 as your delay as it might be to fast for mudae
 a minimum of 1 second to let mudae register that a character was rolled as is reacted to.
 
 # Use at your own Risk
