@@ -522,11 +522,11 @@ def on_message(resp):
             if msg_buf[messageid]['claimed']:
                 if butts.components != [] :
                     cooldown = kakera_wall.get(guildid,0) - time.time()
+                    if roller != user['id']:
+                        time.sleep(snipe_delay)
                     for butt in butts.components[0]["components"]:
                         buttMoji = butt["emoji"]["name"]
                         if (buttMoji.lower() in KakeraVari and cooldown <= 1) or buttMoji.lower() == "kakerap":
-                            if roller != user['id']:
-                                time.sleep(snipe_delay)
                             time.sleep(0.5)
                             customid = butt["custom_id"]
                             bot.click(
