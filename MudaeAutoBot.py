@@ -379,10 +379,12 @@ def waifu_roll(tide,slashed,slashguild):
                 bot.triggerSlashCommand(str(mudae), channelID=tides, guildID=slashguild, data=slashed)
             else:
                 bot.sendMessage(tides,roll_cmd)
-            rolls_left = rolls_left-1
             varwait = wait_for(bot,mudae_warning(tides,False),timeout=5)
             time.sleep(.5)
-            
+
+            if varwait != None:
+                rolls_left = rolls_left-1
+
             if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
                 # We over-rolled.
                 checkmudaedown = 0
