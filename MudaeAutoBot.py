@@ -383,7 +383,11 @@ def waifu_roll(tide,slashed,slashguild):
             time.sleep(.5)
 
             if varwait != None:
-                rolls_left = rolls_left-1
+                # Check if it's our roll if a message is received
+                our_roll = msg_buf.get(varwait['id'],{}).get('rolled',None)
+                if our_roll:
+                    # minus rolls_left after 2 rolls left warning
+                    rolls_left = rolls_left-1
 
             if varwait != None and msg_checking(varwait['content']) and "$ku" not in varwait['content']:
                 # We over-rolled.
@@ -402,8 +406,6 @@ def waifu_roll(tide,slashed,slashguild):
                     total_text += varwait['embeds'][0].get('footer',{}).get('text','') # $rollsleft 0 (default)
                     total_text += varwait['embeds'][0].get('description','') # $rollsleft 1
                 
-                # Check if it's our roll
-                our_roll = msg_buf.get(varwait['id'],{}).get('rolled',None)
                 p = c_settings['pending']
                 if our_roll == None and p:
                     # on_message may have not seen our roll, so we should manually check if it was our roll
@@ -412,9 +414,11 @@ def waifu_roll(tide,slashed,slashguild):
                 if our_roll and "\u26a0\ufe0f 2 ROLLS " in total_text:
                     # Has warning for us
                     rolls_left = 2
-            if rolls_left == 0 or checkmudaedown > 2:
-                # Ran out of rolls
+                    
+            if rolls_left == 0 or checkmudaedown > 3:
+                # Ran out of rolls or mudae down
                 waifuwait = True
+                
             if varwait == None:
                 checkmudaedown += 1
 
