@@ -76,7 +76,7 @@ Some settings may be superseded by your Mudae server settings.
 + `name_list` - **Must be exact match** List of specific character names to claim  e.g. \["Raiden Mei", "gOkU" \]
 + `emoji_list` - This is the kakera that will be snipes \[ "KakeraY" , "KakeraO" \] << This example means only snipe Yellow and orange Kakera
 + `min_kak` - A minimum kakera value to snipe a claimable character _regardless of whether it's in the series/name lists_
-+ `Last_True` -  (True|False) Enable last minute claim window
++ `last_true` -  (True|False) Enable last minute claim window
 + `last_claim_min` - (1-180) the time the window is open for e.g. 10 means last 10 minutes
 + `min_kak_last_min` - same as min kak but only within the last minute claim window
 
