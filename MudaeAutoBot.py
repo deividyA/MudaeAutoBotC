@@ -68,7 +68,7 @@ KakeraVari = [kakerav.lower() for kakerav in settings["emoji_list"]]
 eventlist = ["🕯️","😆"]
 
 #Last min Claims
-is_last_enable = True if settings["Last_True"].lower().strip() == "true" else False 
+is_last_enable = True if settings["last_true"].lower().strip() == "true" else False 
 last_claim_window = settings["last_claim_min"]
 min_kak_last = settings["min_kak_last_min"]
 
@@ -326,12 +326,12 @@ def poke_roll(tide):
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"p")
             pwait = 2*60*60 # sleep for 2 hours
-        print(f"{pwait} : pokerolling : {tide}")
+        print(f"{pwait} : poke_rolling : {tide}")
         time.sleep(pwait) 
         pwait = 0
         
 def daily_roll(tide):
-    logger.debug(f"Daily Rolling Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
+    logger.debug(f"Daily Claiming Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
     tides = str(tide)
     if tide not in channel_settings:
         logger.error(f"Could not find channel {tide}, will not roll Daily")
@@ -342,7 +342,7 @@ def daily_roll(tide):
         while dwait == 0:
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"daily")
-            dwait = 20*60*60 # sleep for 2 hours
+            dwait = 20*60*60 # sleep for 20 hours
         print(f"{dwait} : daily_rolling : {tide}")
         time.sleep(dwait) 
         dwait = 0
@@ -851,11 +851,11 @@ def on_message(resp):
                 c_settings = parse_settings_message(msg)
                 channel_settings[int(matched_channel)] = c_settings
         
-        if settings['dailyrolling'].lower().strip() == "true":
+        if settings['daily_claiming'].lower().strip() == "true":
             time.sleep(3)
             d = threading.Thread(target=daily_roll,args=[mhids[0]])
             d.start()
-        if settings['pokerolling'].lower().strip() == "true":
+        if settings['poke_rolling'].lower().strip() == "true":
             time.sleep(3)
             p = threading.Thread(target=poke_roll,args=[mhids[0]])
             p.start()
