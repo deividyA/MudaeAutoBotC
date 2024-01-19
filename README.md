@@ -49,7 +49,8 @@ You'll be able to leave the window running in the background, and not need to th
 ## Requirements
 
 + Python 3.7+
-+ discum 1.3+
++ Discum my fork `pip install git+https://github.com/Nixeld/Discord-S.C.U.M.git`
+  >uninstall first if you have the one from the original repo
 
 # Configuration
 To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.
