@@ -804,7 +804,8 @@ def on_message(resp):
 
                     
     if resp.event.guild_application_commands_updated:
-        slashCmds = resp.parsed.auto()['application_commands']
+        guild_id = resp.parsed.auto()['guild_id']
+        slashCmds = bot.getGuildSlashCommands(guild_id).json()["application_commands"]
         s = SlashCommander(slashCmds, application_id=str(mudae))
         for sli in range(len(s.commands.get("options"))):
             if s.commands.get("options")[sli].get("name") == slash_prefix:
