@@ -36,7 +36,7 @@ jsonf.close()
 bot = discum.Client(token=settings["token"],log={"console":False, "file":False})
 mudae = 432610292342587392
 
-with open("cmds.txt","r") as f:
+with open("cmds.txt","r", encoding="utf-8") as f:
     mudae_cmds = [line.rstrip() for line in f]
 mhids = [int(mh) for mh in settings["channel_ids"]]
 shids = [int(sh) for sh in settings["slash_ids"]]
@@ -160,8 +160,8 @@ def msg_checking(msgcontent):
     
 def get_server_settings(guild_id,channel_id):
     try:
-        #with open(f"channeldata\\{channel_id}.txt","r") as textsettings:
-        with open(pathjoin('channeldata',f'{channel_id}.txt'),'r') as textsettings:
+        #with open(f"channeldata\\{channel_id}.txt","r", encoding="utf-8") as textsettings:
+        with open(pathjoin('channeldata',f'{channel_id}.txt'),'r', encoding="utf-8") as textsettings:
             print(f"Reading from File for channel {channel_id}")
             return textsettings.read()
     except IOError:
@@ -826,7 +826,7 @@ def on_message(resp):
             print(f"Logged in")
         except KeyError:
             try:
-                with open(pathjoin('user','user.txt'),'r') as userssettings:
+                with open(pathjoin('user','user.txt'),'r', encoding="utf-8") as userssettings:
                     print(f"Reading from UserFile")
                     user = json.loads(userssettings.read())
             except IOError:
@@ -838,7 +838,7 @@ def on_message(resp):
         except KeyError:
             print("It seems like you were unable to get all the guilds you are in please obtain your users settings")
             try:
-                with open(pathjoin('user','guild.txt'),'r') as guildersettings:
+                with open(pathjoin('user','guild.txt'),'r', encoding="utf-8") as guildersettings:
                     print("reading from Guild file")
                     guilds = json.loads(guildersettings.read())
             except IOError:
