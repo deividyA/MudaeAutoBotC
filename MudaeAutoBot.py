@@ -64,7 +64,7 @@ waitk_finder = re.compile(r'\*\*(?:([0-9+])h )?([0-9]+)\*\* min')
 ser_finder = re.compile(r'.*.')
 
 KakeraVari = [kakerav.lower() for kakerav in settings["emoji_list"]]
-#soulLink = ["kakeraR","KakeraO"]
+soulLink = [soulkakerav.lower() for soulkakerav in settings["soulemoji_list"]]
 eventlist = ["🕯️","😆"]
 
 #Last min Claims
@@ -343,7 +343,7 @@ def daily_roll(tide):
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"daily")
             dwait = 20*60*60 # sleep for 20 hours
-        print(f"{dwait} : daily_rolling : {tide}")
+        print(f"Claiming daily in channel: {tide}. Next claim in {dwait} secpnds. ")
         time.sleep(dwait) 
         dwait = 0
         
@@ -769,32 +769,32 @@ def on_message(resp):
                     print(f"{timegetter} second(s) kakera reaction cooldown was set for channel : {rguildid}")
                     kakera_wall[rguildid] = timegetter + time.time()
                     
-            # if emojiid != None and emoji.lower() in soulLink:
-                # react_m = bot.getMessage(rchannelid, rmessageid).json()[0]['embeds'][0]
-                # fake = react_m.get('footer')
-                # if fake and user['username'] in fake['text'] and "<:chaoskey:690110264166842421>" in react_m['description']:
-                    # sendEmoji = emoji + ":" +emojiid
-                    # cooldown = kakera_wall.get(rguildid,0) - time.time()
-                    # if cooldown <= 1:
-                        # print(f"{emoji} was detected on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
-                        # time.sleep(snipe_delay)
-                        # bot.addReaction(rchannelid,rmessageid,sendEmoji)
-                    # else:
-                        # print(f"Skipped {emoji} found on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
-                        # return 
+            if emojiid != None and emoji.lower() in soulLink:
+                react_m = bot.getMessage(rchannelid, rmessageid).json()[0]['embeds'][0]
+                fake = react_m.get('footer')
+                if fake and user['username'] in fake['text'] and "<:chaoskey:690110264166842421>" in react_m['description']:
+                    sendEmoji = emoji + ":" +emojiid
+                    cooldown = kakera_wall.get(rguildid,0) - time.time()
+                    if cooldown <= 1:
+                        print(f"{emoji} was detected on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
+                        time.sleep(snipe_delay)
+                        bot.addReaction(rchannelid,rmessageid,sendEmoji)
+                    else:
+                        print(f"Skipped {emoji} found on {react_m['author']['name']}:{get_serial(react_m['description'])} in Server: {rguildid}")
+                        return 
 
-                    # warn_check = mudae_warning(rchannelid)
-                    # kakerawallwait = wait_for(bot,lambda r: warn_check(r) and 'kakera' in r.parsed.auto()['content'],timeout=5)
+                    warn_check = mudae_warning(rchannelid)
+                    kakerawallwait = wait_for(bot,lambda r: warn_check(r) and 'kakera' in r.parsed.auto()['content'],timeout=5)
 
-                    # if kakerawallwait != None:
-                        # time_to_wait = waitk_finder.findall(kakerawallwait['content'])
-                    # else:
-                        # time_to_wait = []
+                    if kakerawallwait != None:
+                        time_to_wait = waitk_finder.findall(kakerawallwait['content'])
+                    else:
+                        time_to_wait = []
                     
-                    # if len(time_to_wait):
-                        # timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                        # print(f"{timegetter} for kakera_wall was set for Server : {rguildid}")
-                        # kakera_wall[rguildid] = timegetter + time.time()
+                    if len(time_to_wait):
+                        timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
+                        print(f"{timegetter} for kakera_wall was set for Server : {rguildid}")
+                        kakera_wall[rguildid] = timegetter + time.time()
                     
             if emojiid == None:
                 if emoji in eventlist:
