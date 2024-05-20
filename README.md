@@ -54,7 +54,7 @@ You'll be able to leave the window running in the background, and not need to th
   >uninstall first if you have the one from the original repo
 
 ## Running the bot
-To run the bot, run AutoReconnect.py in a terminal with this command. `python .\AutoReconnect.py`<br />
+To run the bot, run `AutoReconnect.py` in a terminal with this command. `python .\AutoReconnect.py`<br />
 If you do not want it to auto reconnect whenever MudaeAutoBot disconnects, you can run `MudaeAutoBot.py` instead.
 
 # Configuration
