@@ -875,4 +875,4 @@ def empty(*args,**kwargs):
 
 #bot.sendMessage = empty
 
-bot.gateway.run(auto_reconnect=True)
+bot.gateway.run(auto_reconnect=False)
