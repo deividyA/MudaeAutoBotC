@@ -53,6 +53,10 @@ You'll be able to leave the window running in the background, and not need to th
 + Discum from this fork `pip install git+https://github.com/Nixeld/Discord-S.C.U.M.git`
   >uninstall first if you have the one from the original repo
 
+## Running the bot
+To run the bot, run AutoReconnect.py in a terminal with this command. `python .\AutoReconnect.py`<br />
+If you do not want it to auto reconnect whenever MudaeAutoBot disconnects, you can run `MudaeAutoBot.py` instead.
+
 # Configuration
 To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.
 Change the guild and channel ids in `guild.txt` as well as username and user id in the `user.txt` under the user folder.
