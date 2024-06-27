@@ -27,7 +27,7 @@ To run the bot, run `AutoReconnect.py` in a terminal with this command. `python 
 If you do not want it to auto reconnect whenever MudaeAutoBot disconnects, you can run `MudaeAutoBot.py` instead.
 
 # Configuration
-To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.<br /><br />
+To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.<br />
 
 Discum may fail to retrieve user and server information for some people, when that happens you will need to: <br />
 + Set your guild and channel ids in `guild.txt` found in the user folder.
@@ -66,8 +66,9 @@ Please when settings delays avoid setting 0 as your delay as it might be to fast
 a minimum of 1 second to let mudae register that a character was rolled as is reacted to.
 
 # Regarding Issue Creation
-Before creating an issue, search through all the issues (including closed issues) on the repository to see if any of them solves your problem.<br />
-Verify that you have the latest version of Discum from this fork https://github.com/Nixeld/Discord-S.C.U.M.git. Latest version is `1.4.3`, you can check your Discum version with `pip show discum`.<br />
+Before creating an issue, search through all the issues (including closed issues) on the repository to see if any of them solves your problem.<br /><br />
+Verify that you have the latest version of Discum from this fork https://github.com/Nixeld/Discord-S.C.U.M.git.<br />
+Latest version is `1.4.3`, you can check your Discum version with `pip show discum`.<br /><br />
 If that does not solve your problem, please provide as much detail as possible when you create your issue so we can quickly identify the problem. (eg. settings file without your user token, screenshots of error)
 
 # Regarding Forking
@@ -84,7 +85,7 @@ I personally have tried to email users that I have found that posted their token
 This is a Discord **selfbot**. I am not responsible if you get banned using this bot. 
 
 # Closing Notes
-This is forked from https://github.com/vivinano/MudaeAutoBot and I will try to maintain this repo.
+This is forked from https://github.com/vivinano/MudaeAutoBot and we will try to maintain this repo.
 
 Thanks to:
 https://github.com/vivinano for MudaeAutoBot 
