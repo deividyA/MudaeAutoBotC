@@ -343,7 +343,7 @@ def daily_roll(tide):
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"daily")
             dwait = 20*60*60 # sleep for 20 hours
-        print(f"Collecting daily in channel {tide}. Next claim in {dwait} seconds.")
+        print(f"Collecting daily roll reset in channel {tide}. Next claim in {dwait} seconds.")
         time.sleep(dwait) 
         dwait = 0
         
