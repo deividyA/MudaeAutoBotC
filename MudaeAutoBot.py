@@ -44,7 +44,7 @@ ghids = [int(gh) for gh in settings["slash_guild_ids"]]
 channel_settings = dict()
 
 series_list = settings["series_list"]
-chars = [charsv.lower() for charsv in settings["namelist"]]
+chars = [charsv.lower() for charsv in settings["name_list"]]
 kak_min = settings["min_kak"]
 roll_prefix = settings["roll_this"]
 slash_prefix = settings["slash_this"]
@@ -162,10 +162,10 @@ def get_server_settings(guild_id,channel_id):
     try:
         #with open(f"channeldata\\{channel_id}.txt","r", encoding="utf-8") as textsettings:
         with open(pathjoin('channeldata',f'{channel_id}.txt'),'r') as textsettings:
-            print(f"Reading from File for channel {channel_id}")
+            print(f"Reading channel settings from file for channel {channel_id}.")
             return textsettings.read()
     except IOError:
-        print(f"File Not Found using Different Method")
+        print(f"File not found, using different method.")
         
     
     msgs = bot.searchMessages(guild_id,authorID=[mudae],textSearch="($togglehentai)",limit = 5)
@@ -195,7 +195,7 @@ def get_server_settings(guild_id,channel_id):
         if group['content'].endswith(roll_prefix):
             settings_hope_prefix = group['content'].split(roll_prefix)[0]
              
-    print(f"Default $settings used for channel {channel_id}")
+    print(f"Default $settings used for channel {channel_id}.")
     default_settings_if_no_settings = f"""🛠️ __**Server Settings**__ 🛠️
                  (Server not premium)
 
@@ -317,7 +317,7 @@ def poke_roll(tide):
     logger.debug(f"Pokemon Rolling Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
     tides = str(tide)
     if tide not in channel_settings:
-        logger.error(f"Could not find channel {tide}, will not roll poke")
+        logger.error(f"Could not find channel {tide}, will not catch Pokemon.")
         return
     c_settings = channel_settings[tide]
     pwait = 0
@@ -326,7 +326,7 @@ def poke_roll(tide):
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"p")
             pwait = 2*60*60 # sleep for 2 hours
-        print(f"{pwait} : poke_rolling : {tide}")
+        print(f"Catching Pokemon in channel {tide}. Next claim in {pwait} seconds.")
         time.sleep(pwait) 
         pwait = 0
         
@@ -334,7 +334,7 @@ def daily_roll(tide):
     logger.debug(f"Daily Claiming Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
     tides = str(tide)
     if tide not in channel_settings:
-        logger.error(f"Could not find channel {tide}, will not roll Daily")
+        logger.error(f"Could not find channel {tide}, will not collect daily roll reset.")
         return
     c_settings = channel_settings[tide]
     dwait = 0
@@ -343,7 +343,7 @@ def daily_roll(tide):
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"daily")
             dwait = 20*60*60 # sleep for 20 hours
-        print(f"Claiming daily in channel: {tide}. Next claim in {dwait} seconds. ")
+        print(f"Collecting daily in channel {tide}. Next claim in {dwait} seconds.")
         time.sleep(dwait) 
         dwait = 0
         
@@ -422,9 +422,9 @@ def waifu_roll(tide,slashed,slashguild):
             if varwait == None:
                 checkmudaedown += 1
 
-        print(f"{waifuwait}: Waifu rolling : {tide}")
-        time.sleep((next_reset(tide)-time.time())+1)
         offset_random = random.randint(0,58)*60
+        print(f"Finish rolling for waifus in channel {tide}. Next roll in {((next_reset(tide)-time.time())+1) + offset_random} seconds.")
+        time.sleep((next_reset(tide)-time.time())+1)
         time.sleep(offset_random)
         waifuwait = False
         
@@ -520,11 +520,11 @@ def on_message(resp):
                     # get claim time
                     if get_pwait(m['content']):
                         waifu_wall[channelid] = next_claim(channelid)[0]
-                        print(f"{next_claim(channelid)[1] - time.time()} second(s) waifu claiming cooldown was set for channel : {channelid}")
+                        print(f"{next_claim(channelid)[1] - time.time()} second(s) waifu claiming cooldown was set for channel {channelid}.")
                 return
 
             msg_buf[messageid] = {'claimed':int(embeds[0].get('color',0)) not in (16751916,1360437),'rolled':roller == user['id']}
-            print(f"Our user rolled in {channelid}" if roller == user['id'] else f"Someone else rolled in {channelid}")
+            print(f"Our user rolled in {channelid}." if roller == user['id'] else f"Someone else rolled in {channelid}.")
             if msg_buf[messageid]['claimed']:
                 kakera_message = bot.getMessage(channelid, messageid).json()[0]['embeds'][0]
                 if butts.components != [] :
@@ -533,8 +533,8 @@ def on_message(resp):
                         time.sleep(snipe_delay)
                     for butt in butts.components[0]["components"]:
                         buttMoji = butt["emoji"]["name"]
-                        # Claim kakera if it is in emoji list or soul emoji list after validation. If kakeraP is in any of the list, it will be claimed without checking cooldown.
-                        if (buttMoji.lower() in KakeraVari and cooldown <= 1) or (buttMoji.lower() in soulLink and cooldown <= 1 and user['username'] in kakera_message.get('footer')['text'] and "<:chaoskey:690110264166842421>" in kakera_message['description']) or (buttMoji.lower() == "kakerap" and ("kakerap" in KakeraVari or "kakerap" in soulLink)):
+                        # Claim kakera if it is in emoji list or soul emoji list after validation. KakeraP will always be claimed.
+                        if (buttMoji.lower() in KakeraVari and cooldown <= 1) or (buttMoji.lower() in soulLink and cooldown <= 1 and user['username'] in kakera_message.get('footer')['text'] and "<:chaoskey:690110264166842421>" in kakera_message['description']) or (buttMoji.lower() == "kakerap"):
                             time.sleep(0.5)
                             customid = butt["custom_id"]
                             bot.click(
@@ -545,9 +545,9 @@ def on_message(resp):
                             messageFlags=m["flags"],
                             data=butts.getButton(customID=customid),
                             )
-                            print(f"Claiming {buttMoji} in Server: {guildid}")
+                            print(f"Claiming {buttMoji} in channel {guildid}")
                         else :
-                            print(f"Skipped {buttMoji} in Server: {guildid}")
+                            print(f"Skipped {buttMoji} in channel {guildid}")
                             
                         warn_check = mudae_warning(channelid)
                         kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
@@ -559,7 +559,7 @@ def on_message(resp):
                         
                         if len(time_to_wait):
                             timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                            print(f"{timegetter} for kakera_wall was set for Server : {guildid}")
+                            print(f"{timegetter} second(s) waifu claiming cooldown was set for channel {guildid}")
                             kakera_wall[guildid] = timegetter + time.time()
                 return
             if(not sniping and roller != user['id']):
@@ -578,7 +578,7 @@ def on_message(resp):
                 charcolor = int(charpop['color'])
 
                 if str(user['id']) in content:
-                    print(f"Wished {charname} from {get_serial(chardes)} with {get_kak(chardes)} Value in Server id:{guildid}")
+                    print(f"Wished character named {charname} from {get_serial(chardes)} with {get_kak(chardes)} value in channel {guildid} has spawned!")
                     snipe(recv,snipe_delay)
                     if msg_buf[messageid]['claimed']:
                         return
@@ -605,8 +605,7 @@ def on_message(resp):
                         # bot.addReaction(channelid, messageid, "❤")
                 
                 if charname.lower() in chars:
-                    
-                    print(f"{charname} appeared attempting to Snipe Server id:{guildid}")
+                    print(f"Attempting to snipe {charname} which is in your character name list in channel {guildid}.")
                     snipe(recv,snipe_delay)
                     if msg_buf[messageid]['claimed']:
                         return
@@ -615,9 +614,7 @@ def on_message(resp):
                 
                 for ser in series_list:
                     if ser in chardes and charcolor == 16751916:
-                        
-                        
-                        print(f"{charname} from {ser} appeared attempting to snipe in {guildid}")
+                        print(f"Attempting to snipe {charname} from {ser} which is in your series list in channel {guildid}.")
                         snipe(recv,snipe_delay)
                         if msg_buf[messageid]['claimed']:
                             return
@@ -651,7 +648,7 @@ def on_message(resp):
                     #det_time = time.time()
                     kak_value = get_kak(chardes)
                     if int(kak_value) >= kak_min and charcolor == 16751916:
-                        print(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
+                        print(f"{charname} with {kak_value} kakera value appeared in channel {guildid}.")
                         snipe(recv,snipe_delay)
                         if msg_buf[messageid]['claimed']:
                             return
@@ -664,8 +661,8 @@ def on_message(resp):
                         #det_time = time.time()
                         kak_value = get_kak(chardes)
                         if int(kak_value) >= min_kak_last and charcolor == 16751916:
-                            print(f"{charname} with a {kak_value} Kakera Value appeared Server:{guildid}")
-                            print(f"Attempting Last Minute Claim")
+                            print(f"{charname} with {kak_value} kakera value appeared in channel {guildid}.")
+                            print(f"Attempting last minute claim.")
                             snipe(recv,snipe_delay)
                             if msg_buf[messageid]['claimed']:
                                 return
@@ -716,7 +713,6 @@ def on_message(resp):
 
     if resp.event.reaction_added:
         r = resp.parsed.auto()
-        #print(r)
         reactionid = int(r['user_id'])
         rchannelid = r["channel_id"]
         rmessageid = r["message_id"]
@@ -730,11 +726,11 @@ def on_message(resp):
         
         if int(rchannelid) not in channel_settings:
             mhids.remove(int(rchannelid))
-            logger.error(f"Could not find settings for {rchannelid}, please trigger the '$settings' command in the server and run the bot again.")
+            logger.error(f"Could not find settings for channel {rchannelid}, please trigger the '$settings' command in that channel and run the bot again.")
             return
         
         if reactionid == int(user['id']) and int(rchannelid) in mhids:
-            print(f"Sniping time waited Reaction was added")
+            print(f"Sniping time waited, reaction was added.")
 
         # snipe_delay = channel_settings[int(rchannelid)]['kak_snipe'][1]
         
@@ -827,26 +823,25 @@ def on_message(resp):
         ready = bot.gateway.READY
         try:
             user = bot.gateway.session.user
-            print(f"Logged in")
+            print(f"Logged in.")
         except KeyError:
             try:
+                print(f"Unable to retrieve user information with Discum, using information from user.txt instead.")
                 with open(pathjoin('user','user.txt'),'r') as userssettings:
-                    print(f"Reading from UserFile")
                     user = json.loads(userssettings.read())
-            except IOError:
-                print(f"File Not Found using Different Method")
+            except:
+                print(f"There is a problem with your user.txt file, please make sure you have formatted it correctly. Refer to the example file for the correct format.")
         bot.gateway.request.searchSlashCommands(str(ghids[0]), limit=100, query=slash_prefix)
         
         try:
             guilds = bot.gateway.session.settings_ready['guilds']
         except KeyError:
-            print("It seems like you were unable to get all the guilds you are in please obtain your users settings")
             try:
+                print("Unable to retrieve guild information with Discum, using information from guild.txt instead.")
                 with open(pathjoin('user','guild.txt'),'r') as guildersettings:
-                    print("reading from Guild file")
                     guilds = json.loads(guildersettings.read())
-            except IOError:
-                print("Please get a dump of all your guilds and put it in the userfolder")
+            except:
+                print(f"There is a problem with your guild.txt file, please make sure you have formatted it correctly. Refer to the example file for the correct format.")
                 
         chs = set(str(mhid) for mhid in mhids)
         for gid, guild in guilds.items():

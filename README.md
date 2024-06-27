@@ -1,33 +1,3 @@
-This script might have to be rewritten using `discord.py-self` due to `Discord-S.C.U.M` being unmaintained.
-https://github.com/dolfies/discord.py-self
-
-# Regarding Forking
-I have seen many users fork this repo. I do not mind forks but I really would like to state that github is a public space and that any user who forks this repo is ultimatly can be found by all the various users that frequent this repo. 
-
-!!!!!!! IF YOU FORK THIS REPO PLEASE DO NOT PUSH A COMMIT WITH YOUR DISCORD USER TOKEN !!!!!!
-
-I personally have tried to email users that I have found that posted their token
- >>> If you have posted your token Please delete said fork and just refork this repo github has a histroy of commits and I can find your token if its posted so again I would like to state
-
-!!!!!!! IF YOU FORK THIS REPO PLEASE DO NOT PUSH A COMMIT WITH YOUR DISCORD USER TOKEN !!!!!!
-
-
-# Regarding Issue Creation
-Lately I have been getting alot of **Issues** that is not based on problems with the bot but they regard `Python Enviroment Errors` I.E `discum module not found`/`discum not installed properly` I have attempted to help many users that have had this problem but it is very time consuming. Python Enviroment issues are not a problem with the **BOT** but how one has installed python this varies from user to user.There are archived issues where a user has had a enviroment issue and they have resolved it you can use that as a reference.
-If these resources do not help there are plently of resources online to help you resolve your `Python Enviroment` Issue
-
-
-`FAQS`
-+ CMD closes instantly - Open with IDLE and run it and it should give you the reason that it closed
-+ JSON load error - https://jsonformatter.curiousconcept.com/# copy and paste your json file into the textbox and click validate
-+ Does it have `gateway` log data ? - Your using older version of Dis.c.u.m refer to their github: https://github.com/Merubokkusu/Discord-S.C.U.M
-+ How is bot suppose to look like in normal state - 
-![image](https://user-images.githubusercontent.com/33008397/123542012-47927e00-d715-11eb-9bf9-26c78a9721d7.png)
-
-+ Claims / Bot didn't claim X character - Please make sure you have checked if the `bot has not claimed already within the claim window` , or that `someone else did not already claim X character before the snipe protection has expired`
-
-**Future Issues opened that do NOT deal with a Error with the BOT will be labeled accordingly and closed**
-
 # MudaeAutoBot
 MudaeAutoBot is a python bot that auto rolls and attempts to snipe Kakeras and Claims in Mudae
 
@@ -37,19 +7,18 @@ MudaeAutoBot is a python bot that auto rolls and attempts to snipe Kakeras and C
 + Maximizes rolls by tracking roll timers
 + Waifu/Husbando rolling
 + Pokeslot rolling
-+ Selective Kakera Reaction Snipes Features(Includes: Soulmate Kak sniping Feature)
++ Selective Kakera Reaction Snipes Features (Includes: Soulmate Kak sniping Feature)
 + Mudae emoji reaction event sniping support
 
 ## How it works
-All this bot needs to work is your Discord token, username, user ID, the channel IDs and server IDs that you want it to roll in.
+All this bot needs to work is your Discord token, channel IDs and server IDs that you want to roll in.
 
 This is intended to be completely automated; it doesn't need to take any input other than initial settings configuration.
 You'll be able to leave the window running in the background, and not need to think about it.
 
 ## Requirements
-
 + Python 3.7+
-+ Git https://git-scm.com/downloads
++ Git https://git-scm.com/downloads (Required for installing Discum from github)
 + Discum from this fork `pip install git+https://github.com/Nixeld/Discord-S.C.U.M.git`
   >uninstall first if you have the one from the original repo
 
@@ -58,8 +27,11 @@ To run the bot, run `AutoReconnect.py` in a terminal with this command. `python 
 If you do not want it to auto reconnect whenever MudaeAutoBot disconnects, you can run `MudaeAutoBot.py` instead.
 
 # Configuration
-To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.
-Change the guild and channel ids in `guild.txt` as well as username and user id in the `user.txt` under the user folder.
+To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.<br /><br />
+
+Discum may fail to retrieve user and server information for some people, when that happens you will need to: <br />
++ Set your guild and channel ids in `guild.txt` found in the user folder.
++ Set your username and user id in the `user.txt` found in the user folder.
 
 ## Bot settings
 All settings are set within the Settings_Mudae.json file.
@@ -93,15 +65,30 @@ Using these values you usually snipes faster than a "Human" user can react
 Please when settings delays avoid setting 0 as your delay as it might be to fast for mudae
 a minimum of 1 second to let mudae register that a character was rolled as is reacted to.
 
+# Regarding Issue Creation
+Before creating an issue, search through all the issues (including closed issues) on the repository to see if any of them solves your problem.<br />
+Verify that you have the latest version of Discum from this fork https://github.com/Nixeld/Discord-S.C.U.M.git. Latest version is `1.4.3`.
+If that does not solve your problem, please provide as much detail as possible when you create your issue so we can quickly identify the problem. (eg. settings file without your user token, screenshots of error)
+
+# Regarding Forking
+I have seen many users fork this repo. I do not mind forks but I really would like to state that github is a public space and that any user who forks this repo is ultimatly can be found by all the various users that frequent this repo. 
+
+!!!!!!! IF YOU FORK THIS REPO PLEASE DO NOT PUSH A COMMIT WITH YOUR DISCORD USER TOKEN !!!!!!
+
+I personally have tried to email users that I have found that posted their token
+ >>> If you have posted your token, please delete said fork and just refork this repo github has a history of commits and I can find your token if its posted so again I would like to state
+
+!!!!!!! IF YOU FORK THIS REPO PLEASE DO NOT PUSH A COMMIT WITH YOUR DISCORD USER TOKEN !!!!!!
+
 # Use at your own Risk
-This is a Discord **selfbot**. I am not responsible if you get banned using this program. 
+This is a Discord **selfbot**. I am not responsible if you get banned using this bot. 
 
 # Closing Notes
-This is forked from https://github.com/vivinano/MudaeAutoBot and I will try to see if we can support this repo.
+This is forked from https://github.com/vivinano/MudaeAutoBot and I will try to maintain this repo.
 
 Thanks to:
-https://github.com/vivinano for this MudaeAutoBot 
+https://github.com/vivinano for MudaeAutoBot 
 and
 https://github.com/FatPain
-for assisting vivinano with Discum
+for assisting vivinano with Discum.
 
