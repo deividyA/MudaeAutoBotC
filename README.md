@@ -67,7 +67,7 @@ a minimum of 1 second to let mudae register that a character was rolled as is re
 
 # Regarding Issue Creation
 Before creating an issue, search through all the issues (including closed issues) on the repository to see if any of them solves your problem.<br />
-Verify that you have the latest version of Discum from this fork https://github.com/Nixeld/Discord-S.C.U.M.git. Latest version is `1.4.3`.<br />
+Verify that you have the latest version of Discum from this fork https://github.com/Nixeld/Discord-S.C.U.M.git. Latest version is `1.4.3`, you can check your Discum version with `pip show discum`.<br />
 If that does not solve your problem, please provide as much detail as possible when you create your issue so we can quickly identify the problem. (eg. settings file without your user token, screenshots of error)
 
 # Regarding Forking
