@@ -518,7 +518,7 @@ def on_message(resp):
                     # get claim time
                     if get_pwait(m['content']):
                         waifu_wall[channelid] = next_claim(channelid)[0]
-                        print(f"{next_claim(channelid)[1] - time.time()} second(s) waifu claiming cooldown was set for channel {channelid}.")
+                        print(f"{round(next_claim(channelid)[1] - time.time())} second(s) waifu claiming cooldown was set for channel {channelid}.")
                 return
 
             msg_buf[messageid] = {'claimed':int(embeds[0].get('color',0)) not in (16751916,1360437),'rolled':roller == user['id']}
