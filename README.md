@@ -20,7 +20,6 @@ You'll be able to leave the window running in the background, and not need to th
 + Python 3.7+
 + Git https://git-scm.com/downloads (Required for installing Discum from github)
 + Discum from this fork `pip install git+https://github.com/Nixeld/Discord-S.C.U.M.git`
-  >uninstall first if you have the one from the original repo
 
 ## Running the bot
 To run the bot, run `AutoReconnect.py` in a terminal with this command. `python .\AutoReconnect.py`<br />
