@@ -350,15 +350,15 @@ def daily_roll(tide):
 def waifu_roll(tide,slashed,slashguild):
     global user
     if slashed == None:
-        logger.debug(f"waifu rolling Started in channel {tide}")
+        print(f"Rolling for waifus in channel {tide}.")
     else:
-        logger.debug(f"Slashed rolling Started in channel {tide}")
+        print(f"Slash rolling for waifus in channel {tide}.")
     
     tides = str(tide)
     waifuwait = 0
     
     if tide not in channel_settings:
-        logger.error(f"Could not find channel {tide}, skipping waifu roll on this channel.")
+        print(f"Could not find channel {tide}, skipping waifu rolling on this channel.")
         return
     
     c_settings = channel_settings[tide]
@@ -396,7 +396,7 @@ def waifu_roll(tide,slashed,slashguild):
                 if c_settings['rolls'] > 2 and not warned_overroll:
                     # We overrolled when we shouldn't have. Warn the user they can prevent this
                     warned_overroll = True
-                    logger.warning("Please enable $rollsleft 0 feature to prevent overrolling")
+                    logger.warning("Please enable $rollsleft 0 feature to prevent overrolling.")
                 break
             elif varwait != None and rolls_left < 0:
                 # Check if our roll featured a warning
@@ -423,7 +423,7 @@ def waifu_roll(tide,slashed,slashguild):
                 checkmudaedown += 1
 
         offset_random = random.randint(0,58)*60
-        print(f"Finish rolling for waifus in channel {tide}. Next roll in {((next_reset(tide)-time.time())+1) + offset_random} seconds.")
+        print(f"Finish rolling for waifus in channel {tide}. Next roll in {round(((next_reset(tide)-time.time())+1) + offset_random)} seconds.")
         time.sleep((next_reset(tide)-time.time())+1)
         time.sleep(offset_random)
         waifuwait = False
@@ -545,9 +545,9 @@ def on_message(resp):
                             messageFlags=m["flags"],
                             data=butts.getButton(customID=customid),
                             )
-                            print(f"Claiming {buttMoji} in channel {guildid}")
+                            print(f"Claiming {buttMoji} in channel {guildid}.")
                         else :
-                            print(f"Skipped {buttMoji} in channel {guildid}")
+                            print(f"Skipped {buttMoji} in channel {guildid}.")
                             
                         warn_check = mudae_warning(channelid)
                         kakerawallwait = wait_for(bot,lambda m: warn_check(m) and 'kakera' in m.parsed.auto()['content'],timeout=5)
