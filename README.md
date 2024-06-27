@@ -27,7 +27,7 @@ To run the bot, run `AutoReconnect.py` in a terminal with this command. `python 
 If you do not want it to auto reconnect whenever MudaeAutoBot disconnects, you can run `MudaeAutoBot.py` instead.
 
 # Configuration
-To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.<br /><br />
+To configure the bot, you'll edit the variables in the `Settings_Mudae.json` file for your botting needs.<br />
 
 Discum may fail to retrieve user and server information for some people, when that happens you will need to: <br />
 + Set your guild and channel ids in `guild.txt` found in the user folder.
