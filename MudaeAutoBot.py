@@ -314,7 +314,6 @@ def next_reset(channel):
     return t+(3600-((t-offset)%3600))
 
 def poke_roll(tide):
-    logger.debug(f"Pokemon Rolling Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
     tides = str(tide)
     if tide not in channel_settings:
         logger.error(f"Could not find channel {tide}, will not catch Pokemon.")
@@ -331,7 +330,6 @@ def poke_roll(tide):
         pwait = 0
         
 def daily_roll(tide):
-    logger.debug(f"Daily Claiming Started in channel {tide}. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
     tides = str(tide)
     if tide not in channel_settings:
         logger.error(f"Could not find channel {tide}, will not collect daily roll reset.")
@@ -343,7 +341,7 @@ def daily_roll(tide):
             time.sleep(2)
             bot.sendMessage(tides,c_settings['prefix']+"daily")
             dwait = 20*60*60 # sleep for 20 hours
-        print(f"Collecting daily roll reset in channel {tide}. Next claim in {dwait} seconds.")
+        print(f"Collected daily roll reset in channel {tide}. Next claim in {dwait} seconds. (If you would like this in a different channel, please configure the desired channel ID as the first in your list)")
         time.sleep(dwait) 
         dwait = 0
         
