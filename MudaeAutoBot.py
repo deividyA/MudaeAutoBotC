@@ -557,7 +557,7 @@ def on_message(resp):
                         
                         if len(time_to_wait):
                             timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                            print(f"{timegetter} second(s) waifu claiming cooldown was set for channel {guildid}")
+                            print(f"{timegetter} second(s) kakera reaction cooldown was set for channel {guildid}")
                             kakera_wall[guildid] = timegetter + time.time()
                 return
             if(not sniping and roller != user['id']):
