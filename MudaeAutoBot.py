@@ -299,11 +299,11 @@ def get_snipe_time(channel,rolled,message):
 
 def next_claim(channel):
     channel = int(channel)
-    offset = (120-(channel_settings[channel]['shift']+channel_settings[channel]['reset_min']))*60
+    offset = (channel_settings[channel]['shift']+channel_settings[channel]['reset_min'] + 4)*60
     reset_period = channel_settings[channel]['claim_reset']*60
-    t = time.time()
-    last_reset = (t%86400)%reset_period + offset
-    reset_at = t+reset_period-last_reset
+    t = time.time()+offset
+    last_reset = (t%86400)%reset_period
+    reset_at = reset_period-last_reset+time.time()
     return (int(t/reset_period),reset_at) # claim window id, timestamp of reset
 
 def next_reset(channel):
