@@ -16,6 +16,7 @@
    "slash_this":"wx",
    "rolling":"True",
    "slash_rolling":"True",
+   "random_rolling":"True",
    "daily_claiming":"True",
    "poke_rolling":"True",
    "series_list":[

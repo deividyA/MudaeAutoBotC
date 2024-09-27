@@ -20,7 +20,6 @@ You'll be able to leave the window running in the background, and not need to th
 + Python 3.7+
 + Git https://git-scm.com/downloads (Required for installing Discum from github)
 + Discum from this fork `pip install git+https://github.com/Nixeld/Discord-S.C.U.M.git`
-  >uninstall first if you have the one from the original repo
 
 ## Running the bot
 To run the bot, run `AutoReconnect.py` in a terminal with this command. `python .\AutoReconnect.py`<br />
@@ -48,6 +47,7 @@ Some settings may be superseded by your Mudae server settings.
 + `slash_this` - (wa|wx|wg|hg|ha|mg|ma|mx) If `slash_rolling` is enabled it will roll this specific command e.g. '/wg'
 + `rolling` - (True|False) **Case-sensitive**, uses `channelid`
 + `slash_rolling` - (True|False) **Case-sensitive**, uses `Slash_ids`
++ `random_rolling` - (True|False) **Case-sensitive**, Random roll time between the each reset.
 + `daily_claiming` - (True|False) **Case-sensitive**, Trigger $daily command everyday
 + `poke_rolling` - (True|False) **Case-sensitive**, Pokeslot rolling enabled, uses `channelid`
 + `series_list` - **Case-sensitive** Name of series of characters you want to claim  e.g. \[ "Honkai Impact 3rd" , "Senran Kagura" \]
