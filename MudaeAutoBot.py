@@ -48,10 +48,8 @@ chars = [charsv.lower() for charsv in settings["name_list"]]
 kak_min = settings["min_kak"]
 roll_prefix = settings["roll_this"]
 slash_prefix = settings["slash_this"]
-random_rolling = settings["random_rolling"]
+random_rolling = True if settings["random_rolling"].lower().strip() == "true" else False
 sniping = settings.get("sniping_enabled",True)
-
-offset_random = 0
 
 ready = bot.gateway.READY
 
@@ -422,12 +420,12 @@ def waifu_roll(tide,slashed,slashguild):
                 
             if varwait == None:
                 checkmudaedown += 1
+        offset_random = 0
         if random_rolling:
             offset_random = random.randint(0,58)*60
         print(f"Finish rolling for waifus in channel {tide}. Next roll in {round(((next_reset(tide)-time.time())+1) + offset_random)} seconds.")
         time.sleep((next_reset(tide)-time.time())+1+offset_random)
         waifuwait = False
-        
 
 def snipe(recv_time,snipe_delay):
     if snipe_delay != 0.0:
