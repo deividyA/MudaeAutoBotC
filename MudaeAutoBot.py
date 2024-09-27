@@ -48,6 +48,7 @@ chars = [charsv.lower() for charsv in settings["name_list"]]
 kak_min = settings["min_kak"]
 roll_prefix = settings["roll_this"]
 slash_prefix = settings["slash_this"]
+random_rolling = True if settings["random_rolling"].lower().strip() == "true" else False
 sniping = settings.get("sniping_enabled",True)
 
 ready = bot.gateway.READY
@@ -299,7 +300,7 @@ def get_snipe_time(channel,rolled,message):
 
 def next_claim(channel):
     channel = int(channel)
-    offset = (channel_settings[channel]['shift']+channel_settings[channel]['reset_min'] + 4)*60
+    offset = (channel_settings[channel]['shift']+channel_settings[channel]['reset_min'] + (30 - channel_settings[channel]['reset_min'])*2 )*60
     reset_period = channel_settings[channel]['claim_reset']*60
     t = time.time()+offset
     last_reset = (t%86400)%reset_period
@@ -419,13 +420,12 @@ def waifu_roll(tide,slashed,slashguild):
                 
             if varwait == None:
                 checkmudaedown += 1
-
-        offset_random = random.randint(0,58)*60
+        offset_random = 0
+        if random_rolling:
+            offset_random = random.randint(0,58)*60
         print(f"Finish rolling for waifus in channel {tide}. Next roll in {round(((next_reset(tide)-time.time())+1) + offset_random)} seconds.")
-        time.sleep((next_reset(tide)-time.time())+1)
-        time.sleep(offset_random)
+        time.sleep((next_reset(tide)-time.time())+1+offset_random)
         waifuwait = False
-        
 
 def snipe(recv_time,snipe_delay):
     if snipe_delay != 0.0:
@@ -531,8 +531,8 @@ def on_message(resp):
                         time.sleep(snipe_delay)
                     for butt in butts.components[0]["components"]:
                         buttMoji = butt["emoji"]["name"]
-                        # Claim kakera if it is in emoji list or soul emoji list after validation. KakeraP will always be claimed.
-                        if (buttMoji.lower() in KakeraVari and cooldown <= 1) or (buttMoji.lower() in soulLink and cooldown <= 1 and user['username'] in kakera_message.get('footer')['text'] and "<:chaoskey:690110264166842421>" in kakera_message['description']) or (buttMoji.lower() == "kakerap"):
+                        # Claim kakera if it is in emoji list or soul emoji list after validation. If kakeraP is in any of the list, it will be claimed without checking cooldown.
+                        if (buttMoji.lower() in KakeraVari and cooldown <= 1) or (buttMoji.lower() in soulLink and cooldown <= 1 and user['username'] in kakera_message.get('footer')['text'] and "<:chaoskey:690110264166842421>" in kakera_message['description']) or (buttMoji.lower() == "kakerap" and ("kakerap" in KakeraVari or "kakerap" in soulLink)):
                             time.sleep(0.5)
                             customid = butt["custom_id"]
                             bot.click(
@@ -557,7 +557,7 @@ def on_message(resp):
                         
                         if len(time_to_wait):
                             timegetter = (int(time_to_wait[0][0] or "0")*60+int(time_to_wait[0][1] or "0"))*60
-                            print(f"{timegetter} second(s) waifu claiming cooldown was set for channel {guildid}")
+                            print(f"{timegetter} second(s) kakera reaction cooldown was set for channel {guildid}")
                             kakera_wall[guildid] = timegetter + time.time()
                 return
             if(not sniping and roller != user['id']):
