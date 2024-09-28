@@ -37,7 +37,7 @@ All settings are set within the Settings_Mudae.json file.
 Some settings may be superseded by your Mudae server settings.
 
 + `token` - The user token for the account you want to bot on. If you need extra assistance on how to obtain it, let me know.
-+ `channelids` - Which channels to **Roll** and **monitor**  e.g. 807##########948 (Channel ID)
++ `channelids` - Which channels to **Prefix Roll** and **monitor**  e.g. 807##########948 (Channel ID)
 + `slash_ids` - Which channels to **Slash roll** e.g. 807##########948 (Channel ID)
 + `slash_guild_ids` - Which Guild to **Slash roll** e.g. 807##########948 (Server ID)
 + `claim_delay` - _Affects servers w/o $setting instance_ Time in **seconds** to wait before attempting to Claim Characters e.g. 5
@@ -45,8 +45,8 @@ Some settings may be superseded by your Mudae server settings.
 + `use_emoji` - This setting only works if you change the Mudaebot.py code by uncommenting out the line (Custom emojis only) e.g.  "<:emoji_name:795############214>"
 + `roll_this` - (m|ma|mg|w|wg|wa|h|ha|hg) If `rolling` is enabled it will roll this specific command e.g. '$wg'
 + `slash_this` - (wa|wx|wg|hg|ha|mg|ma|mx) If `slash_rolling` is enabled it will roll this specific command e.g. '/wg'
-+ `rolling` - (True|False) **Case-sensitive**, uses `channelid`
-+ `slash_rolling` - (True|False) **Case-sensitive**, uses `Slash_ids`
++ `rolling` - (True|False) **Case-sensitive**, uses `channelid` to **Prefix Roll**
++ `slash_rolling` - (True|False) **Case-sensitive**, uses `slash_ids` to **Slash roll**
 + `random_rolling` - (True|False) **Case-sensitive**, Random roll time between the each reset.
 + `daily_claiming` - (True|False) **Case-sensitive**, Trigger $daily command everyday
 + `poke_rolling` - (True|False) **Case-sensitive**, Pokeslot rolling enabled, uses `channelid`
