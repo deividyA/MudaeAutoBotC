@@ -5,7 +5,7 @@ while True:
     process = subprocess.Popen(["python", "MudaeAutoBot.py"])
     process.wait()
 
-    print("MudaeAutoBot has disconnected. Restarting in 5 seconds...")
-    time.sleep(5)
+    print("MudaeAutoBot has disconnected. Restarting in 3 seconds...")
+    time.sleep(3)
 
     print("Restarting MudaeAutoBot...")

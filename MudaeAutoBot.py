@@ -850,11 +850,11 @@ def on_message(resp):
                 channel_settings[int(matched_channel)] = c_settings
         
         if settings['daily_claiming'].lower().strip() == "true":
-            time.sleep(3)
+            time.sleep(2)
             d = threading.Thread(target=daily_roll,args=[mhids[0]])
             d.start()
         if settings['poke_rolling'].lower().strip() == "true":
-            time.sleep(3)
+            time.sleep(2)
             p = threading.Thread(target=poke_roll,args=[mhids[0]])
             p.start()
         if settings['rolling'].lower().strip() == "true":
