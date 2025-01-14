@@ -368,21 +368,23 @@ def waifu_roll(tide,slashed,slashguild):
         waifuwait = False
 
 def snipe(recv_time,snipe_delay):
-    if snipe_delay != 0.0:
-        try:
-            time.sleep((recv_time+snipe_delay)-time.time())
-        except ValueError:
+    #if snipe_delay != 0.0:
+   #     try:
+    #        time.sleep((recv_time+snipe_delay)-time.time())
+   #     except ValueError:
             # sleep was negative, so we're overdue!
-            return
+    #        return
     time.sleep(0.3)
     
 def snipe_intent(messagechunk,mreacter,buttonspres):
     if "reactions" in mreacter:
         if mreacter["reactions"][0]["emoji"]['id'] == None:
             bot.addReaction(messagechunk["channel_id"], messagechunk["id"], mreacter["reactions"][0]["emoji"]["name"])
+            print('should be claimed0!')
         elif mreacter["reactions"][0]["emoji"]['id'] != None and "kakera" not in mreacter["reactions"][0]["emoji"]["name"]:
             cust_emoji_send = mreacter["reactions"][0]["emoji"]["name"] + ":" + mreacter["reactions"][0]["emoji"]['id']
             bot.addReaction(messagechunk['channel_id'], messagechunk['id'], cust_emoji_send)
+            print('should be claimed1!')
     elif buttonspres.components != [] :
         buttMojis = buttonspres.components[0]["components"][0]["emoji"]["name"]
         if "kakera" not in buttMojis:
@@ -393,9 +395,11 @@ def snipe_intent(messagechunk,mreacter,buttonspres):
                 messageID=messagechunk["id"],
                 messageFlags=messagechunk["flags"],
                 data=buttonspres.getButton(emojiName=buttMojis),
-                )  
+                )
+        print('should be claimed2!')
     else:
         bot.addReaction(messagechunk['channel_id'], messagechunk['id'], "❤")
+        print('should be claimed3!')
 
 def is_rolled_char(m):
     embeds = m.get('embeds',[])
@@ -508,8 +512,8 @@ def on_message(resp):
                 # confirmed user roll
                 c_settings['rolls'] += 1
             
-            if waifu_wall.get(channelid,0) != next_claim(channelid)[0]:
-                snipe_delay = get_snipe_time(int(channelid),roller,content)
+            if waifu_wall.get(channelid, 0) != next_claim(channelid)[0]:
+                snipe_delay = get_snipe_time(int(channelid), roller, content)
                 charpop = m['embeds'][0]
                 charname = charpop["author"]["name"]
                 chardes = charpop["description"]
@@ -524,26 +528,6 @@ def on_message(resp):
                         return
                     m_reacts = bot.getMessage(channelid, messageid).json()[0]
                     snipe_intent(m,m_reacts,butts)
-                    # if "reactions" in m_reacts:
-                        # if m_reacts["reactions"][0]["emoji"]['id'] == None:
-                            # bot.addReaction(channelid, messageid, m_reacts["reactions"][0]["emoji"]["name"])
-                        # elif m_reacts["reactions"][0]["emoji"]['id'] != None and "kakera" not in m_reacts["reactions"][0]["emoji"]["name"]:
-                            # cust_emoji_sen = m_reacts["reactions"][0]["emoji"]["name"] + ":" + m_reacts["reactions"][0]["emoji"]['id']
-                            # bot.addReaction(channelid, messageid, cust_emoji_sen)
-                    # elif butts.components != [] :
-                        # buttMoji = butts.components[0]["components"][0]["emoji"]["name"]
-                        # if "kakera" not in buttMoji:
-                            # bot.click(
-                                        # aId,
-                                        # channelID=m["channel_id"],
-                                        # guildID=m.get("guild_id"),
-                                        # messageID=m["id"],
-                                        # messageFlags=m["flags"],
-                                        # data=butts.getButton(emojiName=buttMoji),
-                                        # )  
-                    # else:
-                        # bot.addReaction(channelid, messageid, "❤")
-                
                 if charname.lower() in chars:
                     print(f"Attempting to snipe {charname} which is in your character name list in channel {guildid}.")
                     snipe(recv,snipe_delay)
@@ -591,8 +575,9 @@ def on_message(resp):
                         print(f"{charname} with {kak_value} kakera value appeared in channel {guildid}.")
                         m_reacts = bot.getMessage(channelid, messageid).json()[0]
                         snipe_intent(m, m_reacts, butts)
+                        if msg_buf[messageid]['claimed']:
+                            return
                         snipe(recv,snipe_delay)
-                        m_reacts = bot.getMessage(channelid, messageid).json()[0]
                         snipe_intent(m, m_reacts, butts)
                         if msg_buf[messageid]['claimed']:
                             return
